@@ -27,50 +27,61 @@ st.set_page_config(
 # =============================================================================
 # BRANDING & LOGO - ENHANCED VERSION
 # =============================================================================
-# Logo as text-based SVG for crisp rendering
 LOGO_SVG = """
-<svg width="220" height="90" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">
+<svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
             <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
         </linearGradient>
+        <linearGradient id="logoGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2E86C1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#AED6F1;stop-opacity:1" />
+        </linearGradient>
     </defs>
-    <rect x="2" y="12" width="18" height="18" rx="4" fill="url(#logoGrad)" opacity="0.15"/>
-    <path d="M8 21 L11 18 L14 21 L17 18" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <circle cx="11" cy="21" r="2" fill="url(#logoGrad)"/>
-    <text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#logoGrad)" letter-spacing="-1">MEDISIGHTS</text>
-    <text x="30" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="3.5">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    <line x1="30" y1="68" x2="190" y2="68" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.3"/>
-    <circle cx="200" cy="22" r="14" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.8"/>
-    <circle cx="200" cy="22" r="6" fill="url(#logoGrad)" opacity="0.8"/>
-    <path d="M192 15 L200 22 L208 15" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <!-- Medical Icon -->
+    <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGrad)" opacity="0.12"/>
+    <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="12" cy="24" r="2.5" fill="url(#logoGrad)"/>
+    
+    <!-- Main Text -->
+    <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGrad)" letter-spacing="-0.5">MEDISIGHTS</text>
+    
+    <!-- Subtitle -->
+    <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    
+    <!-- Decorative line -->
+    <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.25"/>
+    
+    <!-- Decorative circle -->
+    <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.7"/>
+    <circle cx="215" cy="24" r="7" fill="url(#logoGrad)" opacity="0.7"/>
+    <path d="M206 16 L215 24 L224 16" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
 </svg>
 """
 
-# Dark mode logo
 LOGO_SVG_DARK = """
-<svg width="220" height="90" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">
+<svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#AED6F1;stop-opacity:1" />
             <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
         </linearGradient>
     </defs>
-    <rect x="2" y="12" width="18" height="18" rx="4" fill="url(#logoGradDark)" opacity="0.2"/>
-    <path d="M8 21 L11 18 L14 21 L17 18" stroke="url(#logoGradDark)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <circle cx="11" cy="21" r="2" fill="url(#logoGradDark)"/>
-    <text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#logoGradDark)" letter-spacing="-1">MEDISIGHTS</text>
-    <text x="30" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="3.5">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    <line x1="30" y1="68" x2="190" y2="68" stroke="url(#logoGradDark)" stroke-width="1.5" opacity="0.3"/>
-    <circle cx="200" cy="22" r="14" fill="none" stroke="url(#logoGradDark)" stroke-width="2.5" opacity="0.8"/>
-    <circle cx="200" cy="22" r="6" fill="url(#logoGradDark)" opacity="0.8"/>
-    <path d="M192 15 L200 22 L208 15" stroke="url(#logoGradDark)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGradDark)" opacity="0.15"/>
+    <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGradDark)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="12" cy="24" r="2.5" fill="url(#logoGradDark)"/>
+    <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGradDark)" letter-spacing="-0.5">MEDISIGHTS</text>
+    <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGradDark)" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGradDark)" stroke-width="2.5" opacity="0.7"/>
+    <circle cx="215" cy="24" r="7" fill="url(#logoGradDark)" opacity="0.7"/>
+    <path d="M206 16 L215 24 L224 16" stroke="url(#logoGradDark)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
 </svg>
 """
 
 # =============================================================================
-# ADVANCED THEME SYSTEM
+# THEME SYSTEM
 # =============================================================================
 PALETTE = {
     "primary": "#1B4F72",
@@ -85,7 +96,7 @@ PALETTE = {
     "gradient_start": "#1B4F72",
     "gradient_end": "#2E86C1",
     "glow": "rgba(46, 134, 193, 0.3)",
-    "glass_bg": "rgba(255, 255, 255, 0.1)",  # Added this
+    "glass_bg": "rgba(255, 255, 255, 0.1)",
 }
 
 if "dark_mode" not in st.session_state:
@@ -153,9 +164,9 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# ENHANCED CSS WITH BRANDING
+# CSS
 # =============================================================================
-def inject_advanced_css():
+def inject_css():
     st.markdown(f"""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -179,7 +190,6 @@ def inject_advanced_css():
         ::-webkit-scrollbar-thumb {{
             background: linear-gradient(180deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']});
             border-radius: 10px;
-            transition: all 0.3s ease;
         }}
         ::-webkit-scrollbar-thumb:hover {{
             background: linear-gradient(180deg, {PALETTE['gradient_end']}, {PALETTE['gradient_start']});
@@ -193,6 +203,7 @@ def inject_advanced_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
+        /* HEADER */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -203,30 +214,23 @@ def inject_advanced_css():
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideDown 0.6s ease-out;
+            animation: slideDown 0.5s ease-out;
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.12);
             min-height: 80px;
         }}
         
         @keyframes slideDown {{
-            from {{
-                transform: translateY(-100%);
-                opacity: 0;
-            }}
-            to {{
-                transform: translateY(0);
-                opacity: 1;
-            }}
+            from {{ transform: translateY(-100%); opacity: 0; }}
+            to {{ transform: translateY(0); opacity: 1; }}
         }}
         
         .header-logo {{
             display: flex;
             align-items: center;
             gap: 15px;
-            flex-shrink: 0;
         }}
         
         .header-logo svg {{
@@ -238,8 +242,7 @@ def inject_advanced_css():
         .header-status {{
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex-shrink: 0;
+            gap: 15px;
         }}
         
         .status-badge {{
@@ -272,12 +275,12 @@ def inject_advanced_css():
         
         .status-badge .dot.green {{
             background: {PALETTE['success']};
-            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
         }}
         
         .status-badge .dot.yellow {{
             background: {PALETTE['warning']};
-            box-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
         }}
         
         @keyframes pulse {{
@@ -285,41 +288,35 @@ def inject_advanced_css():
             50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
+        /* SIDEBAR */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-right: 1px solid {T['glass_border']};
-            box-shadow: 4px 0 30px rgba(0,0,0,0.15);
+            box-shadow: 4px 0 30px rgba(0,0,0,0.12);
             animation: slideIn 0.5s ease-out;
             padding-top: 10px;
         }}
         
         @keyframes slideIn {{
-            from {{
-                transform: translateX(-100%);
-                opacity: 0;
-            }}
-            to {{
-                transform: translateX(0);
-                opacity: 1;
-            }}
+            from {{ transform: translateX(-100%); opacity: 0; }}
+            to {{ transform: translateX(0); opacity: 1; }}
         }}
         
         .sidebar-brand {{
             text-align: center;
-            padding: 20px 15px 25px 15px;
+            padding: 18px 15px 22px 15px;
             border-bottom: 2px solid {T['glass_border']};
-            margin-bottom: 20px;
+            margin: 0 12px 20px 12px;
             background: {T['glass_bg']};
-            border-radius: 12px;
-            margin: 0 10px 20px 10px;
+            border-radius: 14px;
         }}
         
         .sidebar-brand svg {{
             height: 80px;
             width: auto;
-            filter: drop-shadow(0 4px 16px rgba(27, 79, 114, 0.2));
+            filter: drop-shadow(0 4px 16px rgba(27, 79, 114, 0.15));
         }}
         
         .sidebar-brand .tagline {{
@@ -331,12 +328,13 @@ def inject_advanced_css():
             text-transform: uppercase;
         }}
         
+        /* FOOTER */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-top: 2px solid {T['glass_border']};
-            padding: 25px 30px;
+            padding: 20px 30px;
             margin: 30px -20px -10px -20px;
             text-align: center;
         }}
@@ -346,7 +344,7 @@ def inject_advanced_css():
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
             max-width: 1200px;
             margin: 0 auto;
         }}
@@ -354,13 +352,13 @@ def inject_advanced_css():
         .footer-brand {{
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }}
         
         .footer-brand svg {{
-            height: 45px;
+            height: 42px;
             width: auto;
-            filter: drop-shadow(0 2px 8px rgba(27, 79, 114, 0.1));
+            filter: drop-shadow(0 2px 8px rgba(27, 79, 114, 0.08));
         }}
         
         .footer-text {{
@@ -371,16 +369,16 @@ def inject_advanced_css():
         
         .footer-links {{
             display: flex;
-            gap: 25px;
+            gap: 20px;
         }}
         
         .footer-links a {{
             color: {T['subtext']};
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
         }}
         
@@ -390,6 +388,7 @@ def inject_advanced_css():
             transform: translateY(-2px);
         }}
         
+        /* CARDS */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -416,12 +415,12 @@ def inject_advanced_css():
         }}
         
         .kpi-card:hover::before, .insight-card:hover::before, .model-card:hover::before {{
-            opacity: 0.15;
+            opacity: 0.12;
         }}
         
         .kpi-card:hover, .insight-card:hover, .model-card:hover {{
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 12px 40px rgba(27, 79, 114, 0.2),
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(27, 79, 114, 0.15),
                         0 0 60px {PALETTE['glow']};
             border-color: {T['accent']};
         }}
@@ -446,7 +445,6 @@ def inject_advanced_css():
             border-left: 5px solid {T['accent']};
             padding-left: 15px;
             margin: 32px 0 20px 0;
-            position: relative;
         }}
         
         .section-header h3 {{
@@ -494,10 +492,11 @@ def inject_advanced_css():
         }}
         
         .fab:hover {{
-            transform: scale(1.15) translateY(-4px) rotate(90deg);
+            transform: scale(1.15) translateY(-4px);
             box-shadow: 0 12px 48px {PALETTE['glow']};
         }}
         
+        /* RESPONSIVE */
         @media (max-width: 768px) {{
             .header-container {{
                 flex-direction: column;
@@ -521,6 +520,7 @@ def inject_advanced_css():
             }}
         }}
         
+        /* STREAMLIT OVERRIDES */
         .stDataFrame {{
             border-radius: 12px !important;
             overflow: hidden !important;
@@ -543,7 +543,7 @@ def inject_advanced_css():
             border-radius: 12px !important;
             padding: 8px 24px !important;
             font-weight: 600 !important;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            transition: all 0.3s ease !important;
             box-shadow: 0 4px 16px {PALETTE['glow']} !important;
         }}
         
@@ -558,7 +558,7 @@ def inject_advanced_css():
             padding: 4px !important;
         }}
         
-        .stSelectbox > div {{
+        .stSelectbox > div, .stMultiSelect > div {{
             background: {T['glass_bg']} !important;
             backdrop-filter: blur(10px) !important;
             border: 1px solid {T['glass_border']} !important;
@@ -566,16 +566,9 @@ def inject_advanced_css():
             transition: all 0.3s ease !important;
         }}
         
-        .stSelectbox > div:hover {{
+        .stSelectbox > div:hover, .stMultiSelect > div:hover {{
             border-color: {T['accent']} !important;
             box-shadow: 0 4px 20px {PALETTE['glow']} !important;
-        }}
-        
-        .stMultiSelect > div {{
-            background: {T['glass_bg']} !important;
-            backdrop-filter: blur(10px) !important;
-            border: 1px solid {T['glass_border']} !important;
-            border-radius: 12px !important;
         }}
         
         .stRadio > div {{
@@ -598,10 +591,30 @@ def inject_advanced_css():
             border: 1px solid {T['accent']} !important;
             box-shadow: 0 4px 16px {PALETTE['glow']} !important;
         }}
+        
+        .insight-tag {{
+            display: inline-block;
+            background: {T['glass_bg']};
+            backdrop-filter: blur(5px);
+            color: {T['accent']};
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            border: 1px solid {T['glass_border']};
+            transition: all 0.3s ease;
+            cursor: default;
+        }}
+        
+        .insight-tag:hover {{
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px {PALETTE['glow']};
+        }}
     </style>
     """, unsafe_allow_html=True)
 
-inject_advanced_css()
+inject_css()
 
 # =============================================================================
 # HEADER
@@ -620,6 +633,9 @@ def render_header():
                 <span class="dot {status_class}"></span>
                 {status_text}
             </span>
+            <span class="status-badge" style="background:linear-gradient(135deg, #F39C12, #E67E22);color:white;border:none;font-size:0.7rem;padding:4px 14px;">
+                🚀 Beta v2.0
+            </span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -636,7 +652,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR WITH BRANDING
+# SIDEBAR
 # =============================================================================
 with st.sidebar:
     st.markdown(f"""
@@ -684,7 +700,7 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown(f"""
-    <div style="text-align:center;padding:10px 0;font-size:0.75rem;color:{T['subtext']};">
+    <div style="text-align:center;padding:10px 0;font-size:0.7rem;color:{T['subtext']};">
         <span>© 2026 MEDISIGHTS</span><br>
         <span>Data-Driven Clinical Insights</span>
     </div>
@@ -727,7 +743,7 @@ def animated_kpi(label, value, desc="", unit="", glow=False):
     glow_class = " glow-border" if glow else ""
     st.markdown(f"""
         <div class="kpi-card{glow_class}">
-            <div style="font-size:0.8rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">{label}</div>
+            <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">{label}</div>
             <div class="kpi-value">{value}{unit}</div>
             <div style="font-size:0.8rem;color:{T['subtext']};">{desc}</div>
         </div>
@@ -747,14 +763,8 @@ def style_fig(fig, title=None, height=420):
         ) if title else None,
         margin=dict(t=60 if title else 30, l=10, r=10, b=10),
         height=height,
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
-            font=dict(size=11)
-        ),
-        hoverlabel=dict(
-            bgcolor=T['panel'],
-            font=dict(color=T['text'])
-        )
+        legend=dict(bgcolor="rgba(0,0,0,0)", font=dict(size=11)),
+        hoverlabel=dict(bgcolor=T['panel'], font=dict(color=T['text']))
     )
     return fig
 
@@ -776,7 +786,7 @@ if page == "🏠 Overview":
     st.markdown(f"""
     <div class="insight-card">
         <p style="font-size:1.05rem;">{nr.DATASET_DESCRIPTION}</p>
-        <p class="subtext">This application analyzes demographic, lifestyle, and clinical measurements to
+        <p style="color:{T['subtext']};">This application analyzes demographic, lifestyle, and clinical measurements to
         understand and predict <b>elevated blood-pressure risk</b>, translating the full notebook analysis
         into an interactive, executive-friendly tool.</p>
     </div>
@@ -812,7 +822,7 @@ if page == "🏠 Overview":
         <div class="insight-card" style="text-align:center;">
             <div style="font-size:3rem;margin-bottom:8px;">📊</div>
             <h4 style="margin:0;">Analytics Dashboard</h4>
-            <p class="subtext">Interactive KPIs, demographics, distributions, and correlations with advanced filtering.</p>
+            <p style="color:{T['subtext']};">Interactive KPIs, demographics, distributions, and correlations with advanced filtering.</p>
         </div>
         """, unsafe_allow_html=True)
     with c2:
@@ -820,7 +830,7 @@ if page == "🏠 Overview":
         <div class="insight-card" style="text-align:center;">
             <div style="font-size:3rem;margin-bottom:8px;">💡</div>
             <h4 style="margin:0;">Business Insights</h4>
-            <p class="subtext">6 core health questions with data-driven answers and actionable recommendations.</p>
+            <p style="color:{T['subtext']};">6 core health questions with data-driven answers and actionable recommendations.</p>
         </div>
         """, unsafe_allow_html=True)
     with c3:
@@ -828,7 +838,7 @@ if page == "🏠 Overview":
         <div class="insight-card" style="text-align:center;">
             <div style="font-size:3rem;margin-bottom:8px;">🤖</div>
             <h4 style="margin:0;">Machine Learning</h4>
-            <p class="subtext">Two models compared on Accuracy, Precision, Recall, F1, and ROC-AUC with feature importance.</p>
+            <p style="color:{T['subtext']};">Two models compared on Accuracy, Precision, Recall, F1, and ROC-AUC with feature importance.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -867,7 +877,6 @@ elif page == "📊 Analytics Dashboard":
         </div>
         """, unsafe_allow_html=True)
 
-    # Key Metrics
     section_header("Key Metrics", "🎯")
     if DATA_MODE == "live":
         k = live_kpis(filtered)
@@ -891,7 +900,6 @@ elif page == "📊 Analytics Dashboard":
             r = kmap[name]
             with col: animated_kpi(name, f"{r['value']:,.1f}" if r['value'] != int(r['value']) else f"{int(r['value']):,}", r["desc"], unit=r["unit"])
 
-    # Population Overview
     section_header("Population Overview", "👥")
     c1, c2 = st.columns(2)
     with c1:
@@ -915,7 +923,6 @@ elif page == "📊 Analytics Dashboard":
         fig.update_layout(showlegend=False)
         st.plotly_chart(style_fig(fig, "⚖️ Individuals by BMI Category (WHO Standard)"), use_container_width=True)
 
-    # Health Indicators
     section_header("Health Indicators", "📊")
     numeric_show = ["Age", "BMI", "Systolic_BP", "Diastolic_BP", "Total_Cholesterol",
                     "HDL_Cholesterol", "LDL_Cholesterol", "Triglycerides"]
@@ -936,7 +943,6 @@ elif page == "📊 Analytics Dashboard":
         st.plotly_chart(style_fig(fig, f"{sel} - Summary Distribution", height=500), use_container_width=True)
         st.caption(f"📊 Mean: {stats['mean']} | Std: {stats['std']} | Min: {stats['min']} | Median: {stats['median']} | Max: {stats['max']}")
 
-    # Correlation
     section_header("Relationships Between Health Indicators", "🔗")
     if DATA_MODE == "live":
         avail_corr = [c for c in nr.CORR_COLUMNS if c in (filtered.columns if filtered is not None else [])]
@@ -950,7 +956,6 @@ elif page == "📊 Analytics Dashboard":
     st.plotly_chart(style_fig(fig, "Correlation Heatmap - Numeric Health Indicators", height=520), use_container_width=True)
     st.caption("💡 Total_Cholesterol correlates moderately with LDL_Cholesterol (0.69, expected since LDL is a component of total cholesterol).")
 
-    # Risk / Outcome
     section_header("Risk / Outcome Analysis", "⚠️")
     c1, c2 = st.columns(2)
     with c1:
@@ -978,7 +983,6 @@ elif page == "📊 Analytics Dashboard":
         fig.update_layout(showlegend=False)
         st.plotly_chart(style_fig(fig, "Elevated BP Risk Rate by BMI Category"), use_container_width=True)
 
-    # Data Explorer
     section_header("Data Explorer", "🔍")
     if DATA_MODE == "live":
         search = st.text_input("🔎 Search (matches any column)", placeholder="Type to filter...")
@@ -1070,7 +1074,7 @@ elif page == "💡 Business Insights":
         st.markdown(f"<hr style='border-color:{T['glass_border']};'>", unsafe_allow_html=True)
 
     section_header("KPI Dashboard", "📊")
-    st.markdown(f"<p style='color:{T['subtext']};'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color:{T['subtext']}'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
     cols = st.columns(3)
     for i, kpi in enumerate(nr.KPI_TABLE):
         val = f"{kpi['value']:,.1f}" if kpi["value"] != int(kpi["value"]) else f"{int(kpi['value']):,}"
@@ -1174,7 +1178,6 @@ elif page == "🤖 Machine Learning":
     </div>
     """, unsafe_allow_html=True)
 
-    # Model Comparison
     section_header("Model Comparison", "📊")
     metrics_df = pd.DataFrame(nr.MODEL_METRICS).T
     
@@ -1183,7 +1186,7 @@ elif page == "🤖 Machine Learning":
         st.dataframe(styled_df, use_container_width=True)
     except (ImportError, AttributeError):
         st.dataframe(metrics_df.style.format("{:.3f}"), use_container_width=True)
-        st.info("💡 Gradient styling is unavailable (matplotlib not installed). Displaying plain formatted metrics.")
+        st.info("💡 Gradient styling is unavailable. Displaying plain formatted metrics.")
 
     fig = go.Figure()
     for model, color in [("Logistic Regression", PALETTE["medium_blue"]), ("Random Forest", PALETTE["dark_blue"])]:
@@ -1282,7 +1285,7 @@ elif page == "ℹ️ About":
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# FOOTER WITH BRANDING
+# FOOTER
 # =============================================================================
 def render_footer():
     st.markdown(f"""
