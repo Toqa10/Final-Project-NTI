@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - CLEAN VERSION (NO DUPLICATION)
+# BRANDING & LOGO - SINGLE DEFINITION (NO DUPLICATION)
 # =============================================================================
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
@@ -34,26 +34,13 @@ LOGO_SVG = """
             <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
             <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
         </linearGradient>
-        <linearGradient id="logoGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#2E86C1;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#AED6F1;stop-opacity:1" />
-        </linearGradient>
     </defs>
-    <!-- Medical Icon -->
     <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGrad)" opacity="0.12"/>
     <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
     <circle cx="12" cy="24" r="2.5" fill="url(#logoGrad)"/>
-    
-    <!-- Main Text -->
     <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGrad)" letter-spacing="-0.5">MEDISIGHTS</text>
-    
-    <!-- Subtitle -->
     <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    
-    <!-- Decorative line -->
     <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.25"/>
-    
-    <!-- Decorative circle -->
     <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.7"/>
     <circle cx="215" cy="24" r="7" fill="url(#logoGrad)" opacity="0.7"/>
     <path d="M206 16 L215 24 L224 16" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
@@ -520,7 +507,6 @@ def inject_css():
             }}
         }}
         
-        /* STREAMLIT OVERRIDES */
         .stDataFrame {{
             border-radius: 12px !important;
             overflow: hidden !important;
