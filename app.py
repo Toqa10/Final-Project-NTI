@@ -811,46 +811,121 @@ if page == "🏠 Overview":
     </div>
     """, unsafe_allow_html=True)
     
-    section_header("Executive Summary", "📈")
+    # ===== KPI CARDS - CUSTOM HTML =====
+    st.markdown("""
+    <div style="margin: 20px 0 10px 0;">
+        <h3 style="border-left:5px solid #2E86C1;padding-left:15px;">📈 Executive Summary</h3>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # KPI Cards - Row 1 (4 columns)
     if DATA_MODE == "live":
         k = live_kpis(df)
+        # Row 1 - 4 cards
         col1, col2, col3, col4 = st.columns(4)
-        
         with col1:
-            animated_kpi("Total Records", f"{k['population']:,}", "Individuals analyzed", glow=True)
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Total Records</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{k['population']:,}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">Individuals analyzed</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col2:
-            animated_kpi("Elevated BP Risk", f"{k['bp_risk']:.1f}", "% high-risk", unit="%")
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Elevated BP Risk</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{k['bp_risk']:.1f}%</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">% high-risk</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col3:
-            animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Best ML Model</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.BEST_MODEL}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col4:
-            animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Top Risk Driver</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.TOP_FEATURE}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">Strongest predictor</div>
+            </div>
+            """, unsafe_allow_html=True)
     else:
+        # Reference mode
         col1, col2, col3, col4 = st.columns(4)
-        
         with col1:
-            animated_kpi("Total Records", f"{nr.CLEANED_SHAPE[0]:,}", "Individuals analyzed", glow=True)
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Total Records</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.CLEANED_SHAPE[0]:,}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">Individuals analyzed</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col2:
-            animated_kpi("Elevated BP Risk", f"{nr.KPI_TABLE[1]['value']:.1f}", "% high-risk", unit="%")
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Elevated BP Risk</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.KPI_TABLE[1]['value']:.1f}%</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">% high-risk</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col3:
-            animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Best ML Model</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.BEST_MODEL}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col4:
-            animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
+            st.markdown(f"""
+            <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+                <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Top Risk Driver</div>
+                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.TOP_FEATURE}</div>
+                <div style="font-size:0.8rem;color:{T['subtext']};">Strongest predictor</div>
+            </div>
+            """, unsafe_allow_html=True)
     
     st.write("")
     
-    # KPI Cards - Row 2 (4 columns)
+    # Row 2 - 4 cards
     col5, col6, col7, col8 = st.columns(4)
-    
     with col5:
-        animated_kpi("Features", nr.FINAL_COLUMN_COUNT, "10 raw + 5 engineered")
+        st.markdown(f"""
+        <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+            <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Features</div>
+            <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.FINAL_COLUMN_COUNT}</div>
+            <div style="font-size:0.8rem;color:{T['subtext']};">10 raw + 5 engineered</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col6:
-        animated_kpi("Business Questions", nr.N_BUSINESS_QUESTIONS, "Answered with data")
+        st.markdown(f"""
+        <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+            <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Business Questions</div>
+            <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.N_BUSINESS_QUESTIONS}</div>
+            <div style="font-size:0.8rem;color:{T['subtext']};">Answered with data</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col7:
-        animated_kpi("KPIs Tracked", nr.N_KPIS, "Population & risk metrics")
+        st.markdown(f"""
+        <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+            <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">KPIs Tracked</div>
+            <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.N_KPIS}</div>
+            <div style="font-size:0.8rem;color:{T['subtext']};">Population & risk metrics</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col8:
-        animated_kpi("ML Models", nr.N_ML_MODELS, "Compared head-to-head")
+        st.markdown(f"""
+        <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
+            <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">ML Models</div>
+            <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.N_ML_MODELS}</div>
+            <div style="font-size:0.8rem;color:{T['subtext']};">Compared head-to-head</div>
+        </div>
+        """, unsafe_allow_html=True)
     
     section_header("What This Application Provides", "✨")
     
