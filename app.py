@@ -35,23 +35,12 @@ LOGO_SVG = """
             <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
             <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
         </linearGradient>
-        <linearGradient id="logoGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#2E86C1;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#AED6F1;stop-opacity:1" />
-        </linearGradient>
     </defs>
-    <!-- Heart/Medical Icon -->
     <rect x="2" y="12" width="18" height="18" rx="4" fill="url(#logoGrad)" opacity="0.15"/>
     <path d="M8 21 L11 18 L14 21 L17 18" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     <circle cx="11" cy="21" r="2" fill="url(#logoGrad)"/>
-    
-    <!-- Main Text -->
     <text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#logoGrad)" letter-spacing="-1">MEDISIGHTS</text>
-    
-    <!-- Subtitle -->
     <text x="30" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="3.5">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    
-    <!-- Decorative elements -->
     <line x1="30" y1="68" x2="190" y2="68" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.3"/>
     <circle cx="200" cy="22" r="14" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.8"/>
     <circle cx="200" cy="22" r="6" fill="url(#logoGrad)" opacity="0.8"/>
@@ -96,6 +85,7 @@ PALETTE = {
     "gradient_start": "#1B4F72",
     "gradient_end": "#2E86C1",
     "glow": "rgba(46, 134, 193, 0.3)",
+    "glass_bg": "rgba(255, 255, 255, 0.1)",  # Added this
 }
 
 if "dark_mode" not in st.session_state:
@@ -163,24 +153,21 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# ENHANCED CSS WITH BRANDING - IMPROVED VISIBILITY
+# ENHANCED CSS WITH BRANDING
 # =============================================================================
 def inject_advanced_css():
     st.markdown(f"""
     <style>
-        /* Import Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {{
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }}
         
-        /* Smooth Scrolling */
         html {{
             scroll-behavior: smooth;
         }}
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {{
             width: 8px;
             height: 8px;
@@ -196,10 +183,8 @@ def inject_advanced_css():
         }}
         ::-webkit-scrollbar-thumb:hover {{
             background: linear-gradient(180deg, {PALETTE['gradient_end']}, {PALETTE['gradient_start']});
-            transform: scale(1.1);
         }}
         
-        /* Main App Background */
         .stApp {{
             background: {T['bg']};
             background-image: 
@@ -208,7 +193,6 @@ def inject_advanced_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
-        /* ===== HEADER - IMPROVED ===== */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -301,7 +285,6 @@ def inject_advanced_css():
             50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
-        /* ===== SIDEBAR - IMPROVED ===== */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
@@ -348,7 +331,6 @@ def inject_advanced_css():
             text-transform: uppercase;
         }}
         
-        /* ===== FOOTER - IMPROVED ===== */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -408,7 +390,6 @@ def inject_advanced_css():
             transform: translateY(-2px);
         }}
         
-        /* ===== GLASS CARDS ===== */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -445,7 +426,6 @@ def inject_advanced_css():
             border-color: {T['accent']};
         }}
         
-        /* KPI Values with Gradient */
         .kpi-value {{
             font-size: 2.2rem;
             font-weight: 900;
@@ -462,7 +442,6 @@ def inject_advanced_css():
             50% {{ transform: scale(1.02); }}
         }}
         
-        /* Section Headers */
         .section-header {{
             border-left: 5px solid {T['accent']};
             padding-left: 15px;
@@ -477,7 +456,6 @@ def inject_advanced_css():
             margin: 0;
         }}
         
-        /* Badge Best */
         .badge-best {{
             background: linear-gradient(135deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']});
             color: white;
@@ -495,7 +473,6 @@ def inject_advanced_css():
             50% {{ box-shadow: 0 4px 40px {PALETTE['glow']}, 0 0 60px {PALETTE['glow']}; }}
         }}
         
-        /* Floating Action Button */
         .fab {{
             position: fixed;
             bottom: 30px;
@@ -521,7 +498,6 @@ def inject_advanced_css():
             box-shadow: 0 12px 48px {PALETTE['glow']};
         }}
         
-        /* Responsive */
         @media (max-width: 768px) {{
             .header-container {{
                 flex-direction: column;
@@ -545,7 +521,6 @@ def inject_advanced_css():
             }}
         }}
         
-        /* Dataframe Styling */
         .stDataFrame {{
             border-radius: 12px !important;
             overflow: hidden !important;
@@ -561,7 +536,6 @@ def inject_advanced_css():
             font-weight: 600 !important;
         }}
         
-        /* Button Styling */
         .stButton > button {{
             background: linear-gradient(135deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']}) !important;
             color: white !important;
@@ -578,14 +552,12 @@ def inject_advanced_css():
             box-shadow: 0 8px 32px {PALETTE['glow']} !important;
         }}
         
-        /* Toggle Switch Enhancement */
         .stToggle {{
             background: {T['glass_bg']} !important;
             border-radius: 999px !important;
             padding: 4px !important;
         }}
         
-        /* Select Box Enhancement */
         .stSelectbox > div {{
             background: {T['glass_bg']} !important;
             backdrop-filter: blur(10px) !important;
@@ -599,7 +571,6 @@ def inject_advanced_css():
             box-shadow: 0 4px 20px {PALETTE['glow']} !important;
         }}
         
-        /* Multiselect Enhancement */
         .stMultiSelect > div {{
             background: {T['glass_bg']} !important;
             backdrop-filter: blur(10px) !important;
@@ -607,7 +578,6 @@ def inject_advanced_css():
             border-radius: 12px !important;
         }}
         
-        /* Sidebar Navigation Radio */
         .stRadio > div {{
             gap: 4px !important;
         }}
@@ -666,7 +636,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR WITH BRANDING - IMPROVED
+# SIDEBAR WITH BRANDING
 # =============================================================================
 with st.sidebar:
     st.markdown(f"""
@@ -1306,7 +1276,7 @@ elif page == "ℹ️ About":
         """, unsafe_allow_html=True)
 
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, {PALETTE['glass_bg']}, {T['panel']});border-radius:12px;padding:20px;border:1px solid {T['glass_border']};text-align:center;">
+    <div style="background:linear-gradient(135deg, {T['glass_bg']}, {T['panel']});border-radius:12px;padding:20px;border:1px solid {T['glass_border']};text-align:center;">
         🚀 Built from <code>python_project_NTI.ipynb</code>. All KPIs, business answers, and ML metrics on this site are the real values produced by that notebook - none are estimated or invented for the deployment.
     </div>
     """, unsafe_allow_html=True)
