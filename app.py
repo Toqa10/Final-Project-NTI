@@ -190,7 +190,6 @@ def inject_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
-        /* HEADER */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -275,7 +274,6 @@ def inject_css():
             50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
-        /* SIDEBAR */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
@@ -315,7 +313,6 @@ def inject_css():
             text-transform: uppercase;
         }}
         
-        /* FOOTER */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -375,7 +372,6 @@ def inject_css():
             transform: translateY(-2px);
         }}
         
-        /* CARDS */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -602,7 +598,7 @@ def inject_css():
 inject_css()
 
 # =============================================================================
-# HEADER - SINGLE DEFINITION
+# HEADER
 # =============================================================================
 def render_header():
     status_class = "green" if DATA_MODE == "live" else "yellow"
@@ -625,6 +621,8 @@ def render_header():
     </div>
     """, unsafe_allow_html=True)
 
+render_header()
+
 # =============================================================================
 # FLOATING ACTION BUTTON
 # =============================================================================
@@ -635,10 +633,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR - SINGLE DEFINITION
+# SIDEBAR - FIXED (SINGLE LOGO, SINGLE TAGLINE)
 # =============================================================================
 with st.sidebar:
-    # فقط اللوجو مرة واحدة
+    # اللوجو يظهر مرة واحدة فقط مع التاجلاين
     st.markdown(f"""
     <div class="sidebar-brand">
         {T['logo']}
@@ -654,7 +652,6 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Dark Mode Toggle
     col1, col2 = st.columns([1, 3])
     with col1:
         st.markdown("🌙")
@@ -666,7 +663,6 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Dataset Info
     st.markdown("**📊 Dataset**")
     if DATA_MODE == "live":
         st.success(f"✅ {df.shape[0]:,} records")
@@ -686,18 +682,13 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Footer inside sidebar
+    # حقوق النشر في أسفل السايدبار
     st.markdown(f"""
     <div style="text-align:center;padding:10px 0;font-size:0.7rem;color:{T['subtext']};">
         <span>© 2026 MEDISIGHTS</span><br>
         <span>Data-Driven Clinical Insights</span>
     </div>
     """, unsafe_allow_html=True)
-
-# =============================================================================
-# RENDER HEADER - CALLED ONCE
-# =============================================================================
-render_header()
 
 # =============================================================================
 # HELPERS
@@ -1278,7 +1269,7 @@ elif page == "ℹ️ About":
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# FOOTER - SINGLE DEFINITION
+# FOOTER
 # =============================================================================
 def render_footer():
     st.markdown(f"""
@@ -1300,7 +1291,4 @@ def render_footer():
     </div>
     """, unsafe_allow_html=True)
 
-# =============================================================================
-# RENDER FOOTER - CALLED ONCE
-# =============================================================================
 render_footer()
