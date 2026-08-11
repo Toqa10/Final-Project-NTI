@@ -120,6 +120,34 @@ def theme_vars():
 T = theme_vars()
 
 # =============================================================================
+# DATA LOADING (MUST BE BEFORE HEADER)
+# =============================================================================
+@st.cache_data
+def load_csv(file):
+    with st.spinner("🔄 Loading data..."):
+        time.sleep(0.5)
+        return pd.read_csv(file)
+
+def find_local_csv():
+    for name in ["cleaned_health_data.csv", "health_data_cleaned.csv"]:
+        if os.path.exists(name):
+            return name
+    return None
+
+if "df" not in st.session_state:
+    st.session_state.df = None
+
+local_csv = find_local_csv()
+if local_csv and st.session_state.df is None:
+    try:
+        st.session_state.df = load_csv(local_csv)
+    except Exception:
+        st.session_state.df = None
+
+DATA_MODE = "live" if st.session_state.df is not None else "reference"
+df = st.session_state.df
+
+# =============================================================================
 # ENHANCED CSS WITH BRANDING
 # =============================================================================
 def inject_advanced_css():
@@ -536,7 +564,7 @@ def inject_advanced_css():
 inject_advanced_css()
 
 # =============================================================================
-# HEADER
+# HEADER (NOW DATA_MODE IS DEFINED)
 # =============================================================================
 def render_header():
     status_class = "green" if DATA_MODE == "live" else "yellow"
@@ -569,34 +597,6 @@ st.markdown("""
         ⬆
     </button>
 """, unsafe_allow_html=True)
-
-# =============================================================================
-# DATA LOADING
-# =============================================================================
-@st.cache_data
-def load_csv(file):
-    with st.spinner("🔄 Loading data..."):
-        time.sleep(0.5)
-        return pd.read_csv(file)
-
-def find_local_csv():
-    for name in ["cleaned_health_data.csv", "health_data_cleaned.csv"]:
-        if os.path.exists(name):
-            return name
-    return None
-
-if "df" not in st.session_state:
-    st.session_state.df = None
-
-local_csv = find_local_csv()
-if local_csv and st.session_state.df is None:
-    try:
-        st.session_state.df = load_csv(local_csv)
-    except Exception:
-        st.session_state.df = None
-
-DATA_MODE = "live" if st.session_state.df is not None else "reference"
-df = st.session_state.df
 
 # =============================================================================
 # SIDEBAR WITH BRANDING
@@ -803,10 +803,10 @@ elif page == "📊 Analytics Dashboard":
     
     filtered = None
     if DATA_MODE == "live":
-        st.markdown("""
+        st.markdown(f"""
         <div style="background:{T['glass_bg']};backdrop-filter:blur(10px);border:1px solid {T['glass_border']};border-radius:16px;padding:20px;margin-bottom:20px;">
             <h4 style="margin:0 0 12px 0;">🔍 Advanced Filters</h4>
-        """.format(T=T), unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
         available_filters = [c for c in CAT_FILTER_COLS if c in df.columns]
         cols = st.columns(len(available_filters)) if available_filters else []
         selections = {}
@@ -968,7 +968,7 @@ elif page == "📊 Analytics Dashboard":
 # =============================================================================
 elif page == "💡 Business Insights":
     st.markdown(f"<h1 style='color:{T['accent']};font-weight:900;'>💡 Business & Health Insights</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color:" + T['subtext'] + ";font-size:1.1rem;'>Six core questions from the notebook, answered with real data and visuals.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color:{T['subtext']};font-size:1.1rem;'>Six core questions from the notebook, answered with real data and visuals.</p>", unsafe_allow_html=True)
 
     def bq_chart(key):
         if key == "bq1":
@@ -1030,10 +1030,10 @@ elif page == "💡 Business Insights":
                 <p><b>✅ Recommendation:</b><br>{q['recommendation']}</p>
             </div>
             """, unsafe_allow_html=True)
-        st.markdown("<hr style='border-color:" + T['glass_border'] + ";'>", unsafe_allow_html=True)
+        st.markdown(f"<hr style='border-color:{T['glass_border']};'>", unsafe_allow_html=True)
 
     section_header("KPI Dashboard", "📊")
-    st.markdown("<p style='color:" + T['subtext'] + ";'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color:{T['subtext']};'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
     cols = st.columns(3)
     for i, kpi in enumerate(nr.KPI_TABLE):
         val = f"{kpi['value']:,.1f}" if kpi["value"] != int(kpi["value"]) else f"{int(kpi['value']):,}"
