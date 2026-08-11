@@ -84,6 +84,12 @@ PALETTE = {
     "gradient_end": "#2E86C1",
     "glow": "rgba(46, 134, 193, 0.3)",
     "glass_bg": "rgba(255, 255, 255, 0.1)",
+
+    # Chart colors
+    "dark_blue": "#1B4F72",
+    "medium_blue": "#2E86C1",
+    "light_blue": "#AED6F1",
+    "medium_gray": "#7F8C8D",
 }
 
 if "dark_mode" not in st.session_state:
