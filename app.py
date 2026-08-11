@@ -89,6 +89,9 @@ PALETTE = {
 if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = False
 
+if "sidebar_initialized" not in st.session_state:
+    st.session_state.sidebar_initialized = False
+
 def theme_vars():
     if st.session_state.dark_mode:
         return dict(
@@ -631,16 +634,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR - FIXED (SINGLE LOGO, NO DUPLICATION)
+# SIDEBAR - FIXED WITH SESSION STATE (NO DUPLICATION)
 # =============================================================================
 with st.sidebar:
-    # اللوجو يظهر مرة واحدة فقط مع التاجلاين في div واحد
-    st.markdown(f"""
-    <div class="sidebar-brand">
-        {T['logo']}
-        <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
-    </div>
-    """, unsafe_allow_html=True)
+    # عرض اللوجو مرة واحدة فقط باستخدام session_state
+    if not st.session_state.sidebar_initialized:
+        st.markdown(f"""
+        <div class="sidebar-brand">
+            {T['logo']}
+            <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.session_state.sidebar_initialized = True
     
     page = st.radio(
         "Navigation",
@@ -680,7 +685,6 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # حقوق النشر في أسفل السايدبار
     st.markdown(f"""
     <div style="text-align:center;padding:10px 0;font-size:0.7rem;color:{T['subtext']};">
         <span>© 2026 MEDISIGHTS</span><br>
