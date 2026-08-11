@@ -25,8 +25,9 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - AS CSS BACKGROUND
+# BRANDING & LOGO - SINGLE SOURCE OF TRUTH
 # =============================================================================
+# LOGO_SVG - used for header and footer only
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -67,6 +68,47 @@ LOGO_SVG_DARK = """
 </svg>
 """
 
+# LOGO_SIDEBAR - fixed version for sidebar (no duplication)
+LOGO_SIDEBAR = """
+<svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="logoGradSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGradSidebar)" opacity="0.12"/>
+    <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGradSidebar)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="12" cy="24" r="2.5" fill="url(#logoGradSidebar)"/>
+    <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGradSidebar)" letter-spacing="-0.5">MEDISIGHTS</text>
+    <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGradSidebar)" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGradSidebar)" stroke-width="2.5" opacity="0.7"/>
+    <circle cx="215" cy="24" r="7" fill="url(#logoGradSidebar)" opacity="0.7"/>
+    <path d="M206 16 L215 24 L224 16" stroke="url(#logoGradSidebar)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+</svg>
+"""
+
+LOGO_SIDEBAR_DARK = """
+<svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="logoGradSidebarDark" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#AED6F1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGradSidebarDark)" opacity="0.15"/>
+    <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGradSidebarDark)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="12" cy="24" r="2.5" fill="url(#logoGradSidebarDark)"/>
+    <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGradSidebarDark)" letter-spacing="-0.5">MEDISIGHTS</text>
+    <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGradSidebarDark)" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGradSidebarDark)" stroke-width="2.5" opacity="0.7"/>
+    <circle cx="215" cy="24" r="7" fill="url(#logoGradSidebarDark)" opacity="0.7"/>
+    <path d="M206 16 L215 24 L224 16" stroke="url(#logoGradSidebarDark)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+</svg>
+"""
+
 # =============================================================================
 # THEME SYSTEM
 # =============================================================================
@@ -104,6 +146,7 @@ def theme_vars():
             glass_bg="rgba(22, 35, 58, 0.7)",
             glass_border="rgba(46, 134, 193, 0.3)",
             logo=LOGO_SVG_DARK,
+            logo_sidebar=LOGO_SIDEBAR_DARK,
         )
     return dict(
         bg="#F0F4F8",
@@ -118,6 +161,7 @@ def theme_vars():
         glass_bg="rgba(255, 255, 255, 0.7)",
         glass_border="rgba(27, 79, 114, 0.2)",
         logo=LOGO_SVG,
+        logo_sidebar=LOGO_SIDEBAR,
     )
 
 T = theme_vars()
@@ -151,7 +195,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# CSS - WITH LOGO EMBEDDED
+# CSS
 # =============================================================================
 def inject_css():
     st.markdown(f"""
@@ -566,7 +610,7 @@ def inject_css():
             box-shadow: 0 4px 12px {PALETTE['glow']};
         }}
         
-        /* ===== SIDEBAR BRAND - USING CSS ONLY ===== */
+        /* ===== SIDEBAR BRAND ===== */
         .sidebar-brand {{
             text-align: center;
             padding: 18px 15px 22px 15px;
@@ -596,7 +640,7 @@ def inject_css():
 inject_css()
 
 # =============================================================================
-# HEADER
+# HEADER - FIXED WITH DIRECT HTML
 # =============================================================================
 def render_header():
     status_class = "green" if DATA_MODE == "live" else "yellow"
@@ -629,29 +673,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR - NEW APPROACH: Using markdown with HTML directly
+# SIDEBAR - FIXED WITH DIRECT HTML
 # =============================================================================
 with st.sidebar:
-    # استخدام HTML مباشرة مع اللوجو مرة واحدة
-    st.markdown("""
+    # Sidebar brand with fixed logo (no duplication)
+    st.markdown(f"""
     <div class="sidebar-brand">
-        <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGrad)" opacity="0.12"/>
-            <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle cx="12" cy="24" r="2.5" fill="url(#logoGrad)"/>
-            <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGrad)" letter-spacing="-0.5">MEDISIGHTS</text>
-            <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
-            <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.25"/>
-            <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.7"/>
-            <circle cx="215" cy="24" r="7" fill="url(#logoGrad)" opacity="0.7"/>
-            <path d="M206 16 L215 24 L224 16" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
-        </svg>
+        {T['logo_sidebar']}
         <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
     </div>
     """, unsafe_allow_html=True)
@@ -1285,7 +1313,7 @@ elif page == "ℹ️ About":
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# FOOTER
+# FOOTER - FIXED WITH DIRECT HTML
 # =============================================================================
 def render_footer():
     st.markdown(f"""
