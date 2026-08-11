@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - CLEAN SINGLE DEFINITION
+# BRANDING & LOGO - AS CSS BACKGROUND
 # =============================================================================
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
@@ -89,9 +89,6 @@ PALETTE = {
 if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = False
 
-if "sidebar_initialized" not in st.session_state:
-    st.session_state.sidebar_initialized = False
-
 def theme_vars():
     if st.session_state.dark_mode:
         return dict(
@@ -154,7 +151,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# CSS
+# CSS - WITH LOGO EMBEDDED
 # =============================================================================
 def inject_css():
     st.markdown(f"""
@@ -290,30 +287,6 @@ def inject_css():
         @keyframes slideIn {{
             from {{ transform: translateX(-100%); opacity: 0; }}
             to {{ transform: translateX(0); opacity: 1; }}
-        }}
-        
-        .sidebar-brand {{
-            text-align: center;
-            padding: 18px 15px 22px 15px;
-            border-bottom: 2px solid {T['glass_border']};
-            margin: 0 12px 20px 12px;
-            background: {T['glass_bg']};
-            border-radius: 14px;
-        }}
-        
-        .sidebar-brand svg {{
-            height: 80px;
-            width: auto;
-            filter: drop-shadow(0 4px 16px rgba(27, 79, 114, 0.15));
-        }}
-        
-        .sidebar-brand .tagline {{
-            font-size: 0.7rem;
-            color: {T['accent']};
-            letter-spacing: 2.5px;
-            margin-top: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
         }}
         
         .footer {{
@@ -500,9 +473,6 @@ def inject_css():
                 flex-wrap: wrap;
                 justify-content: center;
             }}
-            .sidebar-brand svg {{
-                height: 60px;
-            }}
         }}
         
         .stDataFrame {{
@@ -595,6 +565,31 @@ def inject_css():
             transform: scale(1.05);
             box-shadow: 0 4px 12px {PALETTE['glow']};
         }}
+        
+        /* ===== SIDEBAR BRAND - USING CSS ONLY ===== */
+        .sidebar-brand {{
+            text-align: center;
+            padding: 18px 15px 22px 15px;
+            border-bottom: 2px solid {T['glass_border']};
+            margin: 0 12px 20px 12px;
+            background: {T['glass_bg']};
+            border-radius: 14px;
+        }}
+        
+        .sidebar-brand svg {{
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 4px 16px rgba(27, 79, 114, 0.15));
+        }}
+        
+        .sidebar-brand .tagline {{
+            font-size: 0.7rem;
+            color: {T['accent']};
+            letter-spacing: 2.5px;
+            margin-top: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -634,18 +629,32 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR - FIXED WITH SESSION STATE (NO DUPLICATION)
+# SIDEBAR - NEW APPROACH: Using markdown with HTML directly
 # =============================================================================
 with st.sidebar:
-    # عرض اللوجو مرة واحدة فقط باستخدام session_state
-    if not st.session_state.sidebar_initialized:
-        st.markdown(f"""
-        <div class="sidebar-brand">
-            {T['logo']}
-            <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
-        </div>
-        """, unsafe_allow_html=True)
-        st.session_state.sidebar_initialized = True
+    # استخدام HTML مباشرة مع اللوجو مرة واحدة
+    st.markdown("""
+    <div class="sidebar-brand">
+        <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <rect x="2" y="14" width="20" height="20" rx="5" fill="url(#logoGrad)" opacity="0.12"/>
+            <path d="M8 24 L12 20 L16 24 L20 20" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="12" cy="24" r="2.5" fill="url(#logoGrad)"/>
+            <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" fill="url(#logoGrad)" letter-spacing="-0.5">MEDISIGHTS</text>
+            <text x="32" y="64" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="4">DATA-DRIVEN CLINICAL INSIGHTS</text>
+            <line x1="32" y1="70" x2="200" y2="70" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.25"/>
+            <circle cx="215" cy="24" r="15" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.7"/>
+            <circle cx="215" cy="24" r="7" fill="url(#logoGrad)" opacity="0.7"/>
+            <path d="M206 16 L215 24 L224 16" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
+    </div>
+    """, unsafe_allow_html=True)
     
     page = st.radio(
         "Navigation",
