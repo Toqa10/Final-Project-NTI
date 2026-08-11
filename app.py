@@ -151,7 +151,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# CSS - ENHANCED
+# CSS
 # =============================================================================
 def inject_css():
     st.markdown(f"""
@@ -621,8 +621,6 @@ def render_header():
     </div>
     """, unsafe_allow_html=True)
 
-render_header()
-
 # =============================================================================
 # FLOATING ACTION BUTTON
 # =============================================================================
@@ -633,10 +631,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR - FIXED (SINGLE LOGO, SINGLE TAGLINE)
+# SIDEBAR - FIXED (SINGLE LOGO, NO DUPLICATION)
 # =============================================================================
 with st.sidebar:
-    # اللوجو يظهر مرة واحدة فقط مع التاجلاين
+    # اللوجو يظهر مرة واحدة فقط مع التاجلاين في div واحد
     st.markdown(f"""
     <div class="sidebar-brand">
         {T['logo']}
@@ -751,6 +749,11 @@ def style_fig(fig, title=None, height=420):
         hoverlabel=dict(bgcolor=T['panel'], font=dict(color=T['text']))
     )
     return fig
+
+# =============================================================================
+# RENDER HEADER
+# =============================================================================
+render_header()
 
 # =============================================================================
 # PAGE: OVERVIEW
