@@ -788,7 +788,7 @@ def style_fig(fig, title=None, height=420):
 render_header()
 
 # =============================================================================
-# PAGE: OVERVIEW
+# PAGE: OVERVIEW - FIXED KPI CARDS
 # =============================================================================
 if page == "🏠 Overview":
     st.markdown(f"""
@@ -813,28 +813,47 @@ if page == "🏠 Overview":
     
     section_header("Executive Summary", "📈")
     
+    # KPI Cards - Row 1 (4 columns)
     if DATA_MODE == "live":
         k = live_kpis(df)
-        c1, c2, c3, c4 = st.columns(4)
-        with c1: animated_kpi("Total Records", f"{k['population']:,}", "Individuals analyzed", glow=True)
-        with c2: animated_kpi("Elevated BP Risk", f"{k['bp_risk']:.1f}", "% high-risk", unit="%")
-        with c3: animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
-        with c4: animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            animated_kpi("Total Records", f"{k['population']:,}", "Individuals analyzed", glow=True)
+        with col2:
+            animated_kpi("Elevated BP Risk", f"{k['bp_risk']:.1f}", "% high-risk", unit="%")
+        with col3:
+            animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
+        with col4:
+            animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
     else:
-        c1, c2, c3, c4 = st.columns(4)
-        with c1: animated_kpi("Total Records", f"{nr.CLEANED_SHAPE[0]:,}", "Individuals analyzed", glow=True)
-        with c2: animated_kpi("Elevated BP Risk", f"{nr.KPI_TABLE[1]['value']:.1f}", "% high-risk", unit="%")
-        with c3: animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
-        with c4: animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            animated_kpi("Total Records", f"{nr.CLEANED_SHAPE[0]:,}", "Individuals analyzed", glow=True)
+        with col2:
+            animated_kpi("Elevated BP Risk", f"{nr.KPI_TABLE[1]['value']:.1f}", "% high-risk", unit="%")
+        with col3:
+            animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
+        with col4:
+            animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
     
     st.write("")
-    c5, c6, c7, c8 = st.columns(4)
-    with c5: animated_kpi("Features", nr.FINAL_COLUMN_COUNT, "10 raw + 5 engineered")
-    with c6: animated_kpi("Business Questions", nr.N_BUSINESS_QUESTIONS, "Answered with data")
-    with c7: animated_kpi("KPIs Tracked", nr.N_KPIS, "Population & risk metrics")
-    with c8: animated_kpi("ML Models", nr.N_ML_MODELS, "Compared head-to-head")
+    
+    # KPI Cards - Row 2 (4 columns)
+    col5, col6, col7, col8 = st.columns(4)
+    
+    with col5:
+        animated_kpi("Features", nr.FINAL_COLUMN_COUNT, "10 raw + 5 engineered")
+    with col6:
+        animated_kpi("Business Questions", nr.N_BUSINESS_QUESTIONS, "Answered with data")
+    with col7:
+        animated_kpi("KPIs Tracked", nr.N_KPIS, "Population & risk metrics")
+    with col8:
+        animated_kpi("ML Models", nr.N_ML_MODELS, "Compared head-to-head")
     
     section_header("What This Application Provides", "✨")
+    
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown(f"""
