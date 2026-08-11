@@ -607,9 +607,19 @@ elif page == "🤖 Machine Learning":
     does, since the two models land within about a point of each other on every metric.</p>
     </div>""", unsafe_allow_html=True)
 
+    # ========== FIXED SECTION: Model Comparison with graceful fallback ==========
     section_header("Model Comparison")
     metrics_df = pd.DataFrame(nr.MODEL_METRICS).T
-    st.dataframe(metrics_df.style.format("{:.3f}").background_gradient(cmap="Blues", axis=0), use_container_width=True)
+    
+    # Try to apply gradient styling, fall back to plain formatting if matplotlib is unavailable
+    try:
+        styled_df = metrics_df.style.format("{:.3f}").background_gradient(cmap="Blues", axis=0)
+        st.dataframe(styled_df, use_container_width=True)
+    except (ImportError, AttributeError):
+        # Fallback: display without gradient styling
+        st.dataframe(metrics_df.style.format("{:.3f}"), use_container_width=True)
+        st.info("💡 Gradient styling is unavailable (matplotlib not installed). Displaying plain formatted metrics.")
+    # ========== END OF FIX ==========
 
     fig = go.Figure()
     for model, color in [("Logistic Regression", PALETTE["medium_blue"]), ("Random Forest", PALETTE["dark_blue"])]:
