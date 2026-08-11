@@ -25,11 +25,11 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO
+# BRANDING & LOGO - ENHANCED VERSION
 # =============================================================================
 # Logo as text-based SVG for crisp rendering
 LOGO_SVG = """
-<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+<svg width="220" height="90" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
@@ -40,28 +40,43 @@ LOGO_SVG = """
             <stop offset="100%" style="stop-color:#AED6F1;stop-opacity:1" />
         </linearGradient>
     </defs>
-    <text x="10" y="40" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="900" fill="url(#logoGrad)">MEDISIGHTS</text>
-    <text x="12" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="3">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    <circle cx="175" cy="20" r="12" fill="none" stroke="url(#logoGrad)" stroke-width="2"/>
-    <circle cx="175" cy="20" r="5" fill="url(#logoGrad)"/>
-    <path d="M168 14 L175 20 L182 14" stroke="url(#logoGrad)" stroke-width="1.5" fill="none"/>
+    <!-- Heart/Medical Icon -->
+    <rect x="2" y="12" width="18" height="18" rx="4" fill="url(#logoGrad)" opacity="0.15"/>
+    <path d="M8 21 L11 18 L14 21 L17 18" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="11" cy="21" r="2" fill="url(#logoGrad)"/>
+    
+    <!-- Main Text -->
+    <text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#logoGrad)" letter-spacing="-1">MEDISIGHTS</text>
+    
+    <!-- Subtitle -->
+    <text x="30" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="3.5">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    
+    <!-- Decorative elements -->
+    <line x1="30" y1="68" x2="190" y2="68" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="200" cy="22" r="14" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" opacity="0.8"/>
+    <circle cx="200" cy="22" r="6" fill="url(#logoGrad)" opacity="0.8"/>
+    <path d="M192 15 L200 22 L208 15" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
 </svg>
 """
 
 # Dark mode logo
 LOGO_SVG_DARK = """
-<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+<svg width="220" height="90" viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#AED6F1;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
         </linearGradient>
     </defs>
-    <text x="10" y="40" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="900" fill="url(#logoGradDark)">MEDISIGHTS</text>
-    <text x="12" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="3">DATA-DRIVEN CLINICAL INSIGHTS</text>
-    <circle cx="175" cy="20" r="12" fill="none" stroke="url(#logoGradDark)" stroke-width="2"/>
-    <circle cx="175" cy="20" r="5" fill="url(#logoGradDark)"/>
-    <path d="M168 14 L175 20 L182 14" stroke="url(#logoGradDark)" stroke-width="1.5" fill="none"/>
+    <rect x="2" y="12" width="18" height="18" rx="4" fill="url(#logoGradDark)" opacity="0.2"/>
+    <path d="M8 21 L11 18 L14 21 L17 18" stroke="url(#logoGradDark)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="11" cy="21" r="2" fill="url(#logoGradDark)"/>
+    <text x="28" y="42" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900" fill="url(#logoGradDark)" letter-spacing="-1">MEDISIGHTS</text>
+    <text x="30" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="3.5">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <line x1="30" y1="68" x2="190" y2="68" stroke="url(#logoGradDark)" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="200" cy="22" r="14" fill="none" stroke="url(#logoGradDark)" stroke-width="2.5" opacity="0.8"/>
+    <circle cx="200" cy="22" r="6" fill="url(#logoGradDark)" opacity="0.8"/>
+    <path d="M192 15 L200 22 L208 15" stroke="url(#logoGradDark)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
 </svg>
 """
 
@@ -90,7 +105,7 @@ def theme_vars():
     if st.session_state.dark_mode:
         return dict(
             bg="#0A1628",
-            panel="rgba(22, 35, 58, 0.92)",
+            panel="rgba(22, 35, 58, 0.95)",
             panel2="rgba(28, 44, 71, 0.8)",
             text="#EAF0F6",
             subtext="#B7C4D6",
@@ -104,7 +119,7 @@ def theme_vars():
         )
     return dict(
         bg="#F0F4F8",
-        panel="rgba(255, 255, 255, 0.92)",
+        panel="rgba(255, 255, 255, 0.95)",
         panel2="rgba(240, 244, 248, 0.8)",
         text="#1B2A4A",
         subtext="#4D5656",
@@ -120,7 +135,7 @@ def theme_vars():
 T = theme_vars()
 
 # =============================================================================
-# DATA LOADING (MUST BE BEFORE HEADER)
+# DATA LOADING
 # =============================================================================
 @st.cache_data
 def load_csv(file):
@@ -148,7 +163,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# ENHANCED CSS WITH BRANDING
+# ENHANCED CSS WITH BRANDING - IMPROVED VISIBILITY
 # =============================================================================
 def inject_advanced_css():
     st.markdown(f"""
@@ -193,7 +208,7 @@ def inject_advanced_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
-        /* ===== HEADER ===== */
+        /* ===== HEADER - IMPROVED ===== */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -208,7 +223,8 @@ def inject_advanced_css():
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+            min-height: 80px;
         }}
         
         @keyframes slideDown {{
@@ -226,35 +242,45 @@ def inject_advanced_css():
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-shrink: 0;
         }}
         
         .header-logo svg {{
-            height: 60px;
+            height: 70px;
             width: auto;
+            filter: drop-shadow(0 2px 8px rgba(27, 79, 114, 0.15));
         }}
         
         .header-status {{
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-shrink: 0;
         }}
         
         .status-badge {{
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
+            gap: 8px;
+            padding: 8px 20px;
             border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
             background: {T['glass_bg']};
             border: 1px solid {T['glass_border']};
             color: {T['text']};
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }}
+        
+        .status-badge:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px {PALETTE['glow']};
         }}
         
         .status-badge .dot {{
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
             animation: pulse 2s ease-in-out infinite;
@@ -262,24 +288,26 @@ def inject_advanced_css():
         
         .status-badge .dot.green {{
             background: {PALETTE['success']};
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
         }}
         
         .status-badge .dot.yellow {{
             background: {PALETTE['warning']};
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
         }}
         
         @keyframes pulse {{
             0%, 100% {{ opacity: 1; transform: scale(1); }}
-            50% {{ opacity: 0.5; transform: scale(0.8); }}
+            50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
-        /* ===== SIDEBAR ===== */
+        /* ===== SIDEBAR - IMPROVED ===== */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-right: 1px solid {T['glass_border']};
-            box-shadow: 4px 0 30px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 30px rgba(0,0,0,0.15);
             animation: slideIn 0.5s ease-out;
             padding-top: 10px;
         }}
@@ -297,30 +325,36 @@ def inject_advanced_css():
         
         .sidebar-brand {{
             text-align: center;
-            padding: 15px 10px 20px 10px;
-            border-bottom: 1px solid {T['glass_border']};
-            margin-bottom: 15px;
+            padding: 20px 15px 25px 15px;
+            border-bottom: 2px solid {T['glass_border']};
+            margin-bottom: 20px;
+            background: {T['glass_bg']};
+            border-radius: 12px;
+            margin: 0 10px 20px 10px;
         }}
         
         .sidebar-brand svg {{
-            height: 70px;
+            height: 80px;
             width: auto;
+            filter: drop-shadow(0 4px 16px rgba(27, 79, 114, 0.2));
         }}
         
         .sidebar-brand .tagline {{
             font-size: 0.7rem;
-            color: {T['subtext']};
-            letter-spacing: 2px;
-            margin-top: 4px;
+            color: {T['accent']};
+            letter-spacing: 2.5px;
+            margin-top: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
         }}
         
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER - IMPROVED ===== */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-top: 1px solid {T['glass_border']};
-            padding: 20px 30px;
+            border-top: 2px solid {T['glass_border']};
+            padding: 25px 30px;
             margin: 30px -20px -10px -20px;
             text-align: center;
         }}
@@ -330,7 +364,7 @@ def inject_advanced_css():
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }}
@@ -338,33 +372,40 @@ def inject_advanced_css():
         .footer-brand {{
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }}
         
         .footer-brand svg {{
-            height: 35px;
+            height: 45px;
             width: auto;
+            filter: drop-shadow(0 2px 8px rgba(27, 79, 114, 0.1));
         }}
         
         .footer-text {{
             color: {T['subtext']};
             font-size: 0.85rem;
+            font-weight: 500;
         }}
         
         .footer-links {{
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }}
         
         .footer-links a {{
             color: {T['subtext']};
             text-decoration: none;
             font-size: 0.85rem;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
         }}
         
         .footer-links a:hover {{
             color: {T['accent']};
+            background: {T['glass_bg']};
+            transform: translateY(-2px);
         }}
         
         /* ===== GLASS CARDS ===== */
@@ -394,7 +435,7 @@ def inject_advanced_css():
         }}
         
         .kpi-card:hover::before, .insight-card:hover::before, .model-card:hover::before {{
-            opacity: 0.1;
+            opacity: 0.15;
         }}
         
         .kpi-card:hover, .insight-card:hover, .model-card:hover {{
@@ -476,7 +517,7 @@ def inject_advanced_css():
         }}
         
         .fab:hover {{
-            transform: scale(1.15) translateY(-4px);
+            transform: scale(1.15) translateY(-4px) rotate(90deg);
             box-shadow: 0 12px 48px {PALETTE['glow']};
         }}
         
@@ -486,6 +527,10 @@ def inject_advanced_css():
                 flex-direction: column;
                 padding: 10px 15px;
                 gap: 10px;
+                min-height: auto;
+            }}
+            .header-logo svg {{
+                height: 50px;
             }}
             .footer-content {{
                 flex-direction: column;
@@ -494,6 +539,9 @@ def inject_advanced_css():
             .footer-links {{
                 flex-wrap: wrap;
                 justify-content: center;
+            }}
+            .sidebar-brand svg {{
+                height: 60px;
             }}
         }}
         
@@ -558,13 +606,35 @@ def inject_advanced_css():
             border: 1px solid {T['glass_border']} !important;
             border-radius: 12px !important;
         }}
+        
+        /* Sidebar Navigation Radio */
+        .stRadio > div {{
+            gap: 4px !important;
+        }}
+        
+        .stRadio label {{
+            padding: 8px 12px !important;
+            border-radius: 10px !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+        }}
+        
+        .stRadio label:hover {{
+            background: {T['glass_bg']} !important;
+        }}
+        
+        .stRadio label[data-selected="true"] {{
+            background: linear-gradient(135deg, {T['glass_bg']}, {T['panel']}) !important;
+            border: 1px solid {T['accent']} !important;
+            box-shadow: 0 4px 16px {PALETTE['glow']} !important;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
 inject_advanced_css()
 
 # =============================================================================
-# HEADER (NOW DATA_MODE IS DEFINED)
+# HEADER
 # =============================================================================
 def render_header():
     status_class = "green" if DATA_MODE == "live" else "yellow"
@@ -579,9 +649,6 @@ def render_header():
             <span class="status-badge">
                 <span class="dot {status_class}"></span>
                 {status_text}
-            </span>
-            <span class="status-badge" style="display:none;">
-                🏥 v2.0
             </span>
         </div>
     </div>
@@ -599,13 +666,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR WITH BRANDING
+# SIDEBAR WITH BRANDING - IMPROVED
 # =============================================================================
 with st.sidebar:
     st.markdown(f"""
     <div class="sidebar-brand">
         {T['logo']}
-        <div class="tagline">ANALYTICS • INSIGHTS • PREDICTION</div>
+        <div class="tagline">⚕️ Analytics • Insights • Prediction</div>
     </div>
     """, unsafe_allow_html=True)
     
