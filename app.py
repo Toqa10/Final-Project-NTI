@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - SINGLE CLEAN DEFINITION
+# BRANDING & LOGO - CLEAN SINGLE DEFINITION
 # =============================================================================
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# CSS - CLEAN WITH NO DUPLICATION
+# CSS - ENHANCED
 # =============================================================================
 def inject_css():
     st.markdown(f"""
@@ -190,6 +190,7 @@ def inject_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
+        /* HEADER */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -274,6 +275,7 @@ def inject_css():
             50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
+        /* SIDEBAR */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
@@ -313,6 +315,7 @@ def inject_css():
             text-transform: uppercase;
         }}
         
+        /* FOOTER */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -372,6 +375,7 @@ def inject_css():
             transform: translateY(-2px);
         }}
         
+        /* CARDS */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -634,6 +638,7 @@ st.markdown("""
 # SIDEBAR - SINGLE DEFINITION
 # =============================================================================
 with st.sidebar:
+    # فقط اللوجو مرة واحدة
     st.markdown(f"""
     <div class="sidebar-brand">
         {T['logo']}
@@ -649,6 +654,7 @@ with st.sidebar:
     
     st.markdown("---")
     
+    # Dark Mode Toggle
     col1, col2 = st.columns([1, 3])
     with col1:
         st.markdown("🌙")
@@ -660,6 +666,7 @@ with st.sidebar:
     
     st.markdown("---")
     
+    # Dataset Info
     st.markdown("**📊 Dataset**")
     if DATA_MODE == "live":
         st.success(f"✅ {df.shape[0]:,} records")
@@ -678,12 +685,19 @@ with st.sidebar:
         st.caption("💡 Upload CSV for live data")
     
     st.markdown("---")
+    
+    # Footer inside sidebar
     st.markdown(f"""
     <div style="text-align:center;padding:10px 0;font-size:0.7rem;color:{T['subtext']};">
         <span>© 2026 MEDISIGHTS</span><br>
         <span>Data-Driven Clinical Insights</span>
     </div>
     """, unsafe_allow_html=True)
+
+# =============================================================================
+# RENDER HEADER - CALLED ONCE
+# =============================================================================
+render_header()
 
 # =============================================================================
 # HELPERS
@@ -746,11 +760,6 @@ def style_fig(fig, title=None, height=420):
         hoverlabel=dict(bgcolor=T['panel'], font=dict(color=T['text']))
     )
     return fig
-
-# =============================================================================
-# RENDER HEADER
-# =============================================================================
-render_header()
 
 # =============================================================================
 # PAGE: OVERVIEW
@@ -1292,6 +1301,6 @@ def render_footer():
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# RENDER FOOTER
+# RENDER FOOTER - CALLED ONCE
 # =============================================================================
 render_footer()
