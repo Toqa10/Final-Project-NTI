@@ -1,7 +1,7 @@
 """
 Health Data Analytics & Risk Prediction - Streamlit Dashboard
 ================================================================
-Advanced UI/UX Version with Premium Design System
+Premium UI/UX Version with MEDISIGHTS Branding
 """
 
 import streamlit as st
@@ -11,7 +11,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 import os
 import time
-from streamlit.components.v1 import html
 
 import notebook_results as nr
 
@@ -19,74 +18,115 @@ import notebook_results as nr
 # PAGE CONFIG
 # =============================================================================
 st.set_page_config(
-    page_title="Health Data Analytics & Risk Prediction",
-    page_icon="🩺",
+    page_title="MEDISIGHTS - Health Data Analytics & Risk Prediction",
+    page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # =============================================================================
-# ADVANCED THEME SYSTEM WITH GLASS-MORPHISM
+# BRANDING & LOGO
+# =============================================================================
+# Logo as text-based SVG for crisp rendering
+LOGO_SVG = """
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1B4F72;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="logoGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2E86C1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#AED6F1;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <text x="10" y="40" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="900" fill="url(#logoGrad)">MEDISIGHTS</text>
+    <text x="12" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#4D5656" letter-spacing="3">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <circle cx="175" cy="20" r="12" fill="none" stroke="url(#logoGrad)" stroke-width="2"/>
+    <circle cx="175" cy="20" r="5" fill="url(#logoGrad)"/>
+    <path d="M168 14 L175 20 L182 14" stroke="url(#logoGrad)" stroke-width="1.5" fill="none"/>
+</svg>
+"""
+
+# Dark mode logo
+LOGO_SVG_DARK = """
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#AED6F1;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#2E86C1;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <text x="10" y="40" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="900" fill="url(#logoGradDark)">MEDISIGHTS</text>
+    <text x="12" y="62" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="#B7C4D6" letter-spacing="3">DATA-DRIVEN CLINICAL INSIGHTS</text>
+    <circle cx="175" cy="20" r="12" fill="none" stroke="url(#logoGradDark)" stroke-width="2"/>
+    <circle cx="175" cy="20" r="5" fill="url(#logoGradDark)"/>
+    <path d="M168 14 L175 20 L182 14" stroke="url(#logoGradDark)" stroke-width="1.5" fill="none"/>
+</svg>
+"""
+
+# =============================================================================
+# ADVANCED THEME SYSTEM
 # =============================================================================
 PALETTE = {
-    "dark_navy": "#1B2A4A",
-    "dark_blue": "#1B4F72",
-    "medium_blue": "#2E86C1",
-    "light_blue": "#AED6F1",
-    "dark_gray": "#4D5656",
-    "medium_gray": "#7F8C8D",
-    "light_gray": "#D5DBDB",
+    "primary": "#1B4F72",
+    "primary_light": "#2E86C1",
+    "primary_lighter": "#AED6F1",
+    "secondary": "#4D5656",
+    "secondary_light": "#7F8C8D",
+    "accent": "#1ABC9C",
+    "warning": "#F39C12",
+    "danger": "#E74C3C",
+    "success": "#2ECC71",
     "gradient_start": "#1B4F72",
     "gradient_end": "#2E86C1",
     "glow": "rgba(46, 134, 193, 0.3)",
-    "glass_bg": "rgba(255, 255, 255, 0.1)",
-    "glass_border": "rgba(255, 255, 255, 0.2)",
 }
 
 if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = False
-if "animation_ready" not in st.session_state:
-    st.session_state.animation_ready = True
 
 def theme_vars():
     if st.session_state.dark_mode:
         return dict(
             bg="#0A1628",
-            panel="rgba(22, 35, 58, 0.85)",
-            panel2="rgba(28, 44, 71, 0.7)",
+            panel="rgba(22, 35, 58, 0.92)",
+            panel2="rgba(28, 44, 71, 0.8)",
             text="#EAF0F6",
             subtext="#B7C4D6",
-            border="rgba(43, 59, 87, 0.5)",
+            border="rgba(43, 59, 87, 0.6)",
             plotly_template="plotly_dark",
-            accent=PALETTE["medium_blue"],
-            accent2=PALETTE["light_blue"],
-            glass_bg="rgba(22, 35, 58, 0.6)",
+            accent=PALETTE["primary_light"],
+            accent2=PALETTE["primary_lighter"],
+            glass_bg="rgba(22, 35, 58, 0.7)",
             glass_border="rgba(46, 134, 193, 0.3)",
+            logo=LOGO_SVG_DARK,
         )
     return dict(
         bg="#F0F4F8",
-        panel="rgba(255, 255, 255, 0.85)",
-        panel2="rgba(240, 244, 248, 0.7)",
+        panel="rgba(255, 255, 255, 0.92)",
+        panel2="rgba(240, 244, 248, 0.8)",
         text="#1B2A4A",
         subtext="#4D5656",
-        border="rgba(213, 219, 219, 0.5)",
+        border="rgba(213, 219, 219, 0.6)",
         plotly_template="plotly_white",
-        accent=PALETTE["dark_blue"],
-        accent2=PALETTE["medium_blue"],
-        glass_bg="rgba(255, 255, 255, 0.6)",
+        accent=PALETTE["primary"],
+        accent2=PALETTE["primary_light"],
+        glass_bg="rgba(255, 255, 255, 0.7)",
         glass_border="rgba(27, 79, 114, 0.2)",
+        logo=LOGO_SVG,
     )
 
 T = theme_vars()
 
 # =============================================================================
-# ADVANCED CSS WITH ANIMATIONS, GLASS EFFECTS & INTERACTIVITY
+# ENHANCED CSS WITH BRANDING
 # =============================================================================
 def inject_advanced_css():
     st.markdown(f"""
     <style>
         /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {{
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -116,7 +156,7 @@ def inject_advanced_css():
             transform: scale(1.1);
         }}
         
-        /* Main App Background with subtle gradient */
+        /* Main App Background */
         .stApp {{
             background: {T['bg']};
             background-image: 
@@ -125,14 +165,95 @@ def inject_advanced_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
-        /* Glass-morphism Sidebar */
+        /* ===== HEADER ===== */
+        .header-container {{
+            background: {T['panel']};
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 2px solid {T['glass_border']};
+            padding: 12px 30px;
+            margin: -10px -20px 20px -20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.6s ease-out;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }}
+        
+        @keyframes slideDown {{
+            from {{
+                transform: translateY(-100%);
+                opacity: 0;
+            }}
+            to {{
+                transform: translateY(0);
+                opacity: 1;
+            }}
+        }}
+        
+        .header-logo {{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }}
+        
+        .header-logo svg {{
+            height: 60px;
+            width: auto;
+        }}
+        
+        .header-status {{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }}
+        
+        .status-badge {{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: {T['glass_bg']};
+            border: 1px solid {T['glass_border']};
+            color: {T['text']};
+        }}
+        
+        .status-badge .dot {{
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }}
+        
+        .status-badge .dot.green {{
+            background: {PALETTE['success']};
+        }}
+        
+        .status-badge .dot.yellow {{
+            background: {PALETTE['warning']};
+        }}
+        
+        @keyframes pulse {{
+            0%, 100% {{ opacity: 1; transform: scale(1); }}
+            50% {{ opacity: 0.5; transform: scale(0.8); }}
+        }}
+        
+        /* ===== SIDEBAR ===== */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-right: 1px solid {T['glass_border']};
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 30px rgba(0,0,0,0.1);
             animation: slideIn 0.5s ease-out;
+            padding-top: 10px;
         }}
         
         @keyframes slideIn {{
@@ -146,7 +267,79 @@ def inject_advanced_css():
             }}
         }}
         
-        /* Glass-morphism Cards with Hover Effects */
+        .sidebar-brand {{
+            text-align: center;
+            padding: 15px 10px 20px 10px;
+            border-bottom: 1px solid {T['glass_border']};
+            margin-bottom: 15px;
+        }}
+        
+        .sidebar-brand svg {{
+            height: 70px;
+            width: auto;
+        }}
+        
+        .sidebar-brand .tagline {{
+            font-size: 0.7rem;
+            color: {T['subtext']};
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }}
+        
+        /* ===== FOOTER ===== */
+        .footer {{
+            background: {T['panel']};
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-top: 1px solid {T['glass_border']};
+            padding: 20px 30px;
+            margin: 30px -20px -10px -20px;
+            text-align: center;
+        }}
+        
+        .footer-content {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }}
+        
+        .footer-brand {{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+        
+        .footer-brand svg {{
+            height: 35px;
+            width: auto;
+        }}
+        
+        .footer-text {{
+            color: {T['subtext']};
+            font-size: 0.85rem;
+        }}
+        
+        .footer-links {{
+            display: flex;
+            gap: 20px;
+        }}
+        
+        .footer-links a {{
+            color: {T['subtext']};
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }}
+        
+        .footer-links a:hover {{
+            color: {T['accent']};
+        }}
+        
+        /* ===== GLASS CARDS ===== */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -183,22 +376,7 @@ def inject_advanced_css():
             border-color: {T['accent']};
         }}
         
-        /* Animated Gradient Border Cards */
-        .kpi-card.glow-border {{
-            border: 2px solid transparent;
-            background-image: linear-gradient({T['panel']}, {T['panel']}), 
-                            linear-gradient(135deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']}, {PALETTE['light_blue']});
-            background-origin: padding-box, border-box;
-            background-clip: padding-box, border-box;
-            animation: borderGlow 3s ease-in-out infinite;
-        }}
-        
-        @keyframes borderGlow {{
-            0%, 100% {{ border-color: {PALETTE['gradient_start']}; }}
-            50% {{ border-color: {PALETTE['gradient_end']}; }}
-        }}
-        
-        /* KPI Values with Gradient Text */
+        /* KPI Values with Gradient */
         .kpi-value {{
             font-size: 2.2rem;
             font-weight: 900;
@@ -215,59 +393,22 @@ def inject_advanced_css():
             50% {{ transform: scale(1.02); }}
         }}
         
-        /* Section Headers with Animated Underline */
+        /* Section Headers */
         .section-header {{
-            border-left: none;
-            padding-left: 0;
+            border-left: 5px solid {T['accent']};
+            padding-left: 15px;
             margin: 32px 0 20px 0;
             position: relative;
         }}
         
         .section-header h3 {{
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: {T['text']};
-            display: inline-block;
-            position: relative;
+            margin: 0;
         }}
         
-        .section-header h3::after {{
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']});
-            transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }}
-        
-        .section-header:hover h3::after {{
-            width: 100%;
-        }}
-        
-        /* Tags with Glass Effect */
-        .insight-tag {{
-            display: inline-block;
-            background: {T['glass_bg']};
-            backdrop-filter: blur(5px);
-            color: {T['accent']};
-            border-radius: 999px;
-            padding: 4px 16px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            border: 1px solid {T['glass_border']};
-            transition: all 0.3s ease;
-            cursor: default;
-        }}
-        
-        .insight-tag:hover {{
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px {PALETTE['glow']};
-        }}
-        
-        /* Best Model Badge with Pulse Animation */
+        /* Badge Best */
         .badge-best {{
             background: linear-gradient(135deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']});
             color: white;
@@ -294,9 +435,9 @@ def inject_advanced_css():
             color: white;
             border: none;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
             cursor: pointer;
             box-shadow: 0 8px 32px {PALETTE['glow']};
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -307,116 +448,25 @@ def inject_advanced_css():
         }}
         
         .fab:hover {{
-            transform: scale(1.15) rotate(90deg);
+            transform: scale(1.15) translateY(-4px);
             box-shadow: 0 12px 48px {PALETTE['glow']};
         }}
         
-        /* Progress Bar Animation */
-        .progress-container {{
-            width: 100%;
-            height: 6px;
-            background: {T['glass_bg']};
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 10px 0;
-        }}
-        
-        .progress-bar {{
-            height: 100%;
-            background: linear-gradient(90deg, {PALETTE['gradient_start']}, {PALETTE['gradient_end']});
-            border-radius: 3px;
-            animation: progressAnimation 1.5s ease-in-out;
-        }}
-        
-        @keyframes progressAnimation {{
-            from {{ width: 0; }}
-        }}
-        
-        /* Tooltip Enhancement */
-        .tooltip-container {{
-            position: relative;
-            display: inline-block;
-            cursor: help;
-        }}
-        
-        .tooltip-container .tooltip-text {{
-            visibility: hidden;
-            width: 200px;
-            background: {T['panel']};
-            color: {T['text']};
-            text-align: center;
-            border-radius: 8px;
-            padding: 8px 12px;
-            position: absolute;
-            z-index: 1000;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            border: 1px solid {T['glass_border']};
-            backdrop-filter: blur(10px);
-            font-size: 0.8rem;
-        }}
-        
-        .tooltip-container:hover .tooltip-text {{
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(-50%) translateY(-10px);
-        }}
-        
-        /* Filter Section with Glass Effect */
-        .filter-section {{
-            background: {T['glass_bg']};
-            backdrop-filter: blur(10px);
-            border: 1px solid {T['glass_border']};
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }}
-        
-        .filter-section:hover {{
-            border-color: {T['accent']};
-            box-shadow: 0 4px 20px {PALETTE['glow']};
-        }}
-        
-        /* Loading Shimmer Effect */
-        .shimmer {{
-            background: linear-gradient(
-                90deg,
-                {T['glass_bg']} 0%,
-                {T['panel']} 50%,
-                {T['glass_bg']} 100%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease-in-out infinite;
-        }}
-        
-        @keyframes shimmer {{
-            0% {{ background-position: -200% 0; }}
-            100% {{ background-position: 200% 0; }}
-        }}
-        
-        /* Responsive Grid */
+        /* Responsive */
         @media (max-width: 768px) {{
-            .stColumns {{
-                flex-direction: column !important;
+            .header-container {{
+                flex-direction: column;
+                padding: 10px 15px;
+                gap: 10px;
             }}
-        }}
-        
-        /* Chart Container Enhancement */
-        .chart-container {{
-            background: {T['panel']};
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid {T['glass_border']};
-            transition: all 0.3s ease;
-        }}
-        
-        .chart-container:hover {{
-            border-color: {T['accent']};
-            box-shadow: 0 8px 32px {PALETTE['glow']};
+            .footer-content {{
+                flex-direction: column;
+                text-align: center;
+            }}
+            .footer-links {{
+                flex-wrap: wrap;
+                justify-content: center;
+            }}
         }}
         
         /* Dataframe Styling */
@@ -472,64 +522,61 @@ def inject_advanced_css():
             border-color: {T['accent']} !important;
             box-shadow: 0 4px 20px {PALETTE['glow']} !important;
         }}
+        
+        /* Multiselect Enhancement */
+        .stMultiSelect > div {{
+            background: {T['glass_bg']} !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid {T['glass_border']} !important;
+            border-radius: 12px !important;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
 inject_advanced_css()
 
 # =============================================================================
-# ENHANCED UI COMPONENTS
+# HEADER
 # =============================================================================
-def glass_card(content, glow=False):
-    glow_class = " glow-border" if glow else ""
-    return f'<div class="kpi-card{glow_class}">{content}</div>'
-
-def animated_kpi(label, value, desc="", unit="", glow=False):
-    content = f"""
-        <div class="kpi-label">{label}</div>
-        <div class="kpi-value">{value}{unit}</div>
-        <div class="kpi-desc">{desc}</div>
-    """
-    st.markdown(glass_card(content, glow), unsafe_allow_html=True)
-
-def progress_bar(value, label=""):
+def render_header():
+    status_class = "green" if DATA_MODE == "live" else "yellow"
+    status_text = "Live Data" if DATA_MODE == "live" else "Reference Mode"
+    
     st.markdown(f"""
-        <div class="progress-container">
-            <div class="progress-bar" style="width:{value}%"></div>
+    <div class="header-container">
+        <div class="header-logo">
+            {T['logo']}
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:{T['subtext']};">
-            <span>{label}</span>
-            <span>{value:.1f}%</span>
+        <div class="header-status">
+            <span class="status-badge">
+                <span class="dot {status_class}"></span>
+                {status_text}
+            </span>
+            <span class="status-badge" style="display:none;">
+                🏥 v2.0
+            </span>
         </div>
+    </div>
     """, unsafe_allow_html=True)
 
-def tooltip(text, tooltip_text):
-    return f"""
-        <div class="tooltip-container">
-            {text}
-            <span class="tooltip-text">{tooltip_text}</span>
-        </div>
-    """
+render_header()
 
 # =============================================================================
 # FLOATING ACTION BUTTON
 # =============================================================================
-def floating_action_button():
-    st.markdown(f"""
-        <button class="fab" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">
-            ⬆
-        </button>
-    """, unsafe_allow_html=True)
-
-floating_action_button()
+st.markdown("""
+    <button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        ⬆
+    </button>
+""", unsafe_allow_html=True)
 
 # =============================================================================
-# DATA LOADING WITH LOADING ANIMATION
+# DATA LOADING
 # =============================================================================
 @st.cache_data
 def load_csv(file):
     with st.spinner("🔄 Loading data..."):
-        time.sleep(0.5)  # Simulate loading for UX
+        time.sleep(0.5)
         return pd.read_csv(file)
 
 def find_local_csv():
@@ -552,28 +599,24 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# SIDEBAR WITH ENHANCED UI
+# SIDEBAR WITH BRANDING
 # =============================================================================
 with st.sidebar:
     st.markdown(f"""
-        <div style="text-align:center;padding:10px 0;">
-            <div style="font-size:3rem;">🩺</div>
-            <h2 style="color:{T['accent']};margin:0;font-weight:900;">Health Analytics</h2>
-            <p class="subtext" style="margin:0;font-size:0.9rem;">Blood Pressure Risk Intelligence</p>
-        </div>
+    <div class="sidebar-brand">
+        {T['logo']}
+        <div class="tagline">ANALYTICS • INSIGHTS • PREDICTION</div>
+    </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("---")
-    
     page = st.radio(
-        "Navigate",
+        "Navigation",
         ["🏠 Overview", "📊 Analytics Dashboard", "💡 Business Insights", "🤖 Machine Learning", "ℹ️ About"],
         label_visibility="collapsed",
     )
-
+    
     st.markdown("---")
     
-    # Enhanced Dark Mode Toggle
     col1, col2 = st.columns([1, 3])
     with col1:
         st.markdown("🌙")
@@ -582,25 +625,33 @@ with st.sidebar:
         if dark_toggle != st.session_state.dark_mode:
             st.session_state.dark_mode = dark_toggle
             st.rerun()
-
+    
     st.markdown("---")
     
-    # Enhanced Dataset Status
     st.markdown("**📊 Dataset**")
     if DATA_MODE == "live":
-        st.success(f"✅ Live: {df.shape[0]:,} rows")
+        st.success(f"✅ {df.shape[0]:,} records")
+        st.caption(f"📅 {df.shape[1]} features")
     else:
         st.info("📌 Reference mode")
     
-    uploaded = st.file_uploader("📤 Upload CSV", type=["csv"])
+    uploaded = st.file_uploader("📤 Upload CSV", type=["csv"], key="sidebar_upload")
     if uploaded is not None:
         st.session_state.df = load_csv(uploaded)
-        st.success("✅ File uploaded successfully!")
+        st.success("✅ Uploaded!")
         time.sleep(0.5)
         st.rerun()
     
     if DATA_MODE == "reference":
         st.caption("💡 Upload CSV for live data")
+    
+    st.markdown("---")
+    st.markdown(f"""
+    <div style="text-align:center;padding:10px 0;font-size:0.75rem;color:{T['subtext']};">
+        <span>© 2026 MEDISIGHTS</span><br>
+        <span>Data-Driven Clinical Insights</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # =============================================================================
 # HELPERS
@@ -635,6 +686,16 @@ def section_header(title, icon="📌"):
         </div>
     """, unsafe_allow_html=True)
 
+def animated_kpi(label, value, desc="", unit="", glow=False):
+    glow_class = " glow-border" if glow else ""
+    st.markdown(f"""
+        <div class="kpi-card{glow_class}">
+            <div style="font-size:0.8rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">{label}</div>
+            <div class="kpi-value">{value}{unit}</div>
+            <div style="font-size:0.8rem;color:{T['subtext']};">{desc}</div>
+        </div>
+    """, unsafe_allow_html=True)
+
 def style_fig(fig, title=None, height=420):
     fig.update_layout(
         template=T["plotly_template"],
@@ -643,7 +704,7 @@ def style_fig(fig, title=None, height=420):
         font=dict(color=T["text"], family="Inter, sans-serif"),
         title=dict(
             text=title, 
-            font=dict(size=18, color=T["accent"], weight=700),
+            font=dict(size=17, color=T["accent"], weight=700),
             x=0.5,
             xanchor='center'
         ) if title else None,
@@ -651,18 +712,11 @@ def style_fig(fig, title=None, height=420):
         height=height,
         legend=dict(
             bgcolor="rgba(0,0,0,0)",
-            font=dict(size=12)
+            font=dict(size=11)
         ),
         hoverlabel=dict(
             bgcolor=T['panel'],
             font=dict(color=T['text'])
-        )
-    )
-    # Add subtle animation to charts
-    fig.update_layout(
-        transition=dict(
-            duration=500,
-            easing="cubic-in-out"
         )
     )
     return fig
@@ -671,34 +725,26 @@ def style_fig(fig, title=None, height=420):
 # PAGE: OVERVIEW
 # =============================================================================
 if page == "🏠 Overview":
-    col1, col2 = st.columns([2.5, 1])
-    with col1:
-        st.markdown(f"""
-            <h1 style="color:{T['accent']};margin-bottom:0;font-weight:900;font-size:2.8rem;">
-                {nr.PROJECT_NAME}
-            </h1>
-            <p class="subtext" style="font-size:1.2rem;margin-top:4px;">
-                {nr.PROJECT_TAGLINE}
-            </p>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown(f"""
-        <div style="text-align:right;padding-top:15px;">
-            <span class="insight-tag">🏥 Healthcare</span>
-            <span class="insight-tag">📊 Analytics</span>
-            <span class="insight-tag">🤖 ML</span>
-        </div>""", unsafe_allow_html=True)
-
+    st.markdown(f"""
+    <div style="padding:10px 0 20px 0;">
+        <h1 style="color:{T['accent']};font-weight:900;font-size:2.5rem;margin:0;">
+            {nr.PROJECT_NAME}
+        </h1>
+        <p style="color:{T['subtext']};font-size:1.1rem;margin:4px 0 0 0;">
+            {nr.PROJECT_TAGLINE}
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown(f"""
     <div class="insight-card">
         <p style="font-size:1.05rem;">{nr.DATASET_DESCRIPTION}</p>
         <p class="subtext">This application analyzes demographic, lifestyle, and clinical measurements to
-        understand and predict <b>elevated blood-pressure risk</b>, translating the full notebook analysis -
-        cleaning, feature engineering, business questions, KPIs, and two Machine Learning models -
+        understand and predict <b>elevated blood-pressure risk</b>, translating the full notebook analysis
         into an interactive, executive-friendly tool.</p>
     </div>
     """, unsafe_allow_html=True)
-
+    
     section_header("Executive Summary", "📈")
     
     if DATA_MODE == "live":
@@ -714,15 +760,14 @@ if page == "🏠 Overview":
         with c2: animated_kpi("Elevated BP Risk", f"{nr.KPI_TABLE[1]['value']:.1f}", "% high-risk", unit="%")
         with c3: animated_kpi("Best ML Model", nr.BEST_MODEL, f"ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}", glow=True)
         with c4: animated_kpi("Top Risk Driver", nr.TOP_FEATURE, "Strongest predictor")
-
+    
     st.write("")
     c5, c6, c7, c8 = st.columns(4)
     with c5: animated_kpi("Features", nr.FINAL_COLUMN_COUNT, "10 raw + 5 engineered")
     with c6: animated_kpi("Business Questions", nr.N_BUSINESS_QUESTIONS, "Answered with data")
     with c7: animated_kpi("KPIs Tracked", nr.N_KPIS, "Population & risk metrics")
     with c8: animated_kpi("ML Models", nr.N_ML_MODELS, "Compared head-to-head")
-
-    # Enhanced Feature Cards
+    
     section_header("What This Application Provides", "✨")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -759,9 +804,9 @@ elif page == "📊 Analytics Dashboard":
     filtered = None
     if DATA_MODE == "live":
         st.markdown("""
-        <div class="filter-section">
+        <div style="background:{T['glass_bg']};backdrop-filter:blur(10px);border:1px solid {T['glass_border']};border-radius:16px;padding:20px;margin-bottom:20px;">
             <h4 style="margin:0 0 12px 0;">🔍 Advanced Filters</h4>
-        """, unsafe_allow_html=True)
+        """.format(T=T), unsafe_allow_html=True)
         available_filters = [c for c in CAT_FILTER_COLS if c in df.columns]
         cols = st.columns(len(available_filters)) if available_filters else []
         selections = {}
@@ -779,13 +824,13 @@ elif page == "📊 Analytics Dashboard":
         st.caption(f"📊 Showing {len(filtered):,} of {len(df):,} records")
     else:
         st.markdown(f"""
-        <div class="banner" style="background:{T['glass_bg']};backdrop-filter:blur(10px);border-radius:12px;padding:16px 20px;border:1px solid {T['glass_border']};">
+        <div style="background:{T['glass_bg']};backdrop-filter:blur(10px);border-radius:12px;padding:16px 20px;border:1px solid {T['glass_border']};">
             📌 Reference mode: showing the real KPI/chart results computed in the notebook. 
             Upload <code>cleaned_health_data.csv</code> in the sidebar to enable live filtering.
         </div>
         """, unsafe_allow_html=True)
 
-    # ---------------- Key Metrics ----------------
+    # Key Metrics
     section_header("Key Metrics", "🎯")
     if DATA_MODE == "live":
         k = live_kpis(filtered)
@@ -809,7 +854,7 @@ elif page == "📊 Analytics Dashboard":
             r = kmap[name]
             with col: animated_kpi(name, f"{r['value']:,.1f}" if r['value'] != int(r['value']) else f"{int(r['value']):,}", r["desc"], unit=r["unit"])
 
-    # ---------------- Population Overview ----------------
+    # Population Overview
     section_header("Population Overview", "👥")
     c1, c2 = st.columns(2)
     with c1:
@@ -819,7 +864,6 @@ elif page == "📊 Analytics Dashboard":
             counts = pd.Series(nr.AGE_GROUP_COUNTS)
         fig = px.bar(x=counts.index, y=counts.values, labels={"x": "Age Group", "y": "Count"},
                      color_discrete_sequence=[PALETTE["dark_blue"]])
-        fig.update_layout(barmode='group')
         st.plotly_chart(style_fig(fig, "👤 Individuals by Age Group"), use_container_width=True)
     with c2:
         if DATA_MODE == "live" and "BMI_Category" in (filtered.columns if filtered is not None else []):
@@ -834,7 +878,7 @@ elif page == "📊 Analytics Dashboard":
         fig.update_layout(showlegend=False)
         st.plotly_chart(style_fig(fig, "⚖️ Individuals by BMI Category (WHO Standard)"), use_container_width=True)
 
-    # ---------------- Health Indicators ----------------
+    # Health Indicators
     section_header("Health Indicators", "📊")
     numeric_show = ["Age", "BMI", "Systolic_BP", "Diastolic_BP", "Total_Cholesterol",
                     "HDL_Cholesterol", "LDL_Cholesterol", "Triglycerides"]
@@ -855,7 +899,7 @@ elif page == "📊 Analytics Dashboard":
         st.plotly_chart(style_fig(fig, f"{sel} - Summary Distribution", height=500), use_container_width=True)
         st.caption(f"📊 Mean: {stats['mean']} | Std: {stats['std']} | Min: {stats['min']} | Median: {stats['median']} | Max: {stats['max']}")
 
-    # ---------------- Correlation ----------------
+    # Correlation
     section_header("Relationships Between Health Indicators", "🔗")
     if DATA_MODE == "live":
         avail_corr = [c for c in nr.CORR_COLUMNS if c in (filtered.columns if filtered is not None else [])]
@@ -867,9 +911,9 @@ elif page == "📊 Analytics Dashboard":
         fig = px.imshow(corr, text_auto=True, color_continuous_scale=["white", PALETTE["dark_blue"]],
                         zmin=-1, zmax=1, aspect="auto")
     st.plotly_chart(style_fig(fig, "Correlation Heatmap - Numeric Health Indicators", height=520), use_container_width=True)
-    st.caption("💡 Total_Cholesterol correlates moderately with LDL_Cholesterol (0.69, expected since LDL is a component of total cholesterol). No pair is near-perfectly correlated.")
+    st.caption("💡 Total_Cholesterol correlates moderately with LDL_Cholesterol (0.69, expected since LDL is a component of total cholesterol).")
 
-    # ---------------- Risk / Outcome ----------------
+    # Risk / Outcome
     section_header("Risk / Outcome Analysis", "⚠️")
     c1, c2 = st.columns(2)
     with c1:
@@ -897,7 +941,7 @@ elif page == "📊 Analytics Dashboard":
         fig.update_layout(showlegend=False)
         st.plotly_chart(style_fig(fig, "Elevated BP Risk Rate by BMI Category"), use_container_width=True)
 
-    # ---------------- Data Explorer ----------------
+    # Data Explorer
     section_header("Data Explorer", "🔍")
     if DATA_MODE == "live":
         search = st.text_input("🔎 Search (matches any column)", placeholder="Type to filter...")
@@ -914,7 +958,7 @@ elif page == "📊 Analytics Dashboard":
             st.caption(f"📊 {len(show_df):,} rows displayed")
     else:
         st.markdown(f"""
-        <div class="banner" style="background:{T['glass_bg']};backdrop-filter:blur(10px);border-radius:12px;padding:16px 20px;border:1px solid {T['glass_border']};">
+        <div style="background:{T['glass_bg']};backdrop-filter:blur(10px);border-radius:12px;padding:16px 20px;border:1px solid {T['glass_border']};">
             📤 Upload <code>cleaned_health_data.csv</code> in the sidebar to browse, search, and download the actual row-level dataset here.
         </div>
         """, unsafe_allow_html=True)
@@ -924,7 +968,7 @@ elif page == "📊 Analytics Dashboard":
 # =============================================================================
 elif page == "💡 Business Insights":
     st.markdown(f"<h1 style='color:{T['accent']};font-weight:900;'>💡 Business & Health Insights</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='subtext' style='font-size:1.1rem;'>Six core questions from the notebook, answered with real data and visuals.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:" + T['subtext'] + ";font-size:1.1rem;'>Six core questions from the notebook, answered with real data and visuals.</p>", unsafe_allow_html=True)
 
     def bq_chart(key):
         if key == "bq1":
@@ -932,7 +976,6 @@ elif page == "💡 Business Insights":
             fig = px.bar(x=s.index, y=s.values, labels={"x": "Smoking Status", "y": "Mean BMI"},
                         color_discrete_sequence=[PALETTE["dark_blue"]],
                         text=s.values.round(1))
-            fig.update_layout(barmode='group')
         elif key == "bq2":
             ages = np.linspace(18, 89, 50)
             trend = 100 + 0.18 * (ages - ages.mean()) * 2.2
@@ -970,7 +1013,7 @@ elif page == "💡 Business Insights":
         <div class="insight-card" style="border-left:4px solid {T['accent']};">
             <span class="insight-tag">❓ Question {i}</span>
             <h4 style="margin-top:6px;font-size:1.2rem;">{q['title']}</h4>
-            <p class="subtext"><b>Why it matters:</b> {q['why']}</p>
+            <p style="color:{T['subtext']};"><b>Why it matters:</b> {q['why']}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -990,7 +1033,7 @@ elif page == "💡 Business Insights":
         st.markdown("<hr style='border-color:" + T['glass_border'] + ";'>", unsafe_allow_html=True)
 
     section_header("KPI Dashboard", "📊")
-    st.markdown("<p class='subtext'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:" + T['subtext'] + ";'>Every KPI computed in the notebook's KPI Analysis section.</p>", unsafe_allow_html=True)
     cols = st.columns(3)
     for i, kpi in enumerate(nr.KPI_TABLE):
         val = f"{kpi['value']:,.1f}" if kpi["value"] != int(kpi["value"]) else f"{int(kpi['value']):,}"
@@ -1026,7 +1069,7 @@ elif page == "🤖 Machine Learning":
     <div class="insight-card">
         <b>📊 Numeric features:</b> {", ".join(nr.ML_FEATURES_NUMERIC)}<br>
         <b>🏷️ Categorical features:</b> {", ".join(nr.ML_FEATURES_CATEGORICAL)}<br><br>
-        <span class="subtext"><b>🚫 Excluded on purpose:</b> <code>Pulse_Pressure</code> is derived directly from
+        <span style="color:{T['subtext']};"><b>🚫 Excluded on purpose:</b> <code>Pulse_Pressure</code> is derived directly from
         Systolic/Diastolic BP - the same columns used to build the target - so including it would leak the
         answer into the model. <code>Cholesterol_Ratio</code> duplicates signal already present in
         Total_Cholesterol and HDL_Cholesterol individually.</span>
@@ -1041,14 +1084,14 @@ elif page == "🤖 Machine Learning":
         st.markdown(f"""
         <div class="model-card">
             <h4 style="margin:0 0 8px 0;">Logistic Regression {best_badge}</h4>
-            <p class="subtext" style="font-size:0.9rem;">A simple, interpretable linear model estimating the probability of elevated BP risk as a weighted, additive combination of the input features.</p>
-            <p class="subtext" style="font-size:0.85rem;"><b>Why selected:</b> the feature set is modest in size and the coefficients directly show the direction and relative size of each feature's effect.</p>
+            <p style="color:{T['subtext']};font-size:0.9rem;">A simple, interpretable linear model estimating the probability of elevated BP risk as a weighted, additive combination of the input features.</p>
+            <p style="color:{T['subtext']};font-size:0.85rem;"><b>Why selected:</b> the feature set is modest in size and the coefficients directly show the direction and relative size of each feature's effect.</p>
             <table style="width:100%;margin-top:12px;border-collapse:collapse;">
-                <tr><td style="padding:4px 0;"><b>Accuracy</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Accuracy']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>Precision</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Precision']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>Recall</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Recall']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>F1-Score</b></td><td style="text-align:right;padding:4px 0;"><b>{m['F1-Score']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>ROC-AUC</b></td><td style="text-align:right;padding:4px 0;"><b>{m['ROC-AUC']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Accuracy</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Accuracy']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Precision</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Precision']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Recall</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Recall']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>F1-Score</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['F1-Score']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>ROC-AUC</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['ROC-AUC']:.3f}</b></td></tr>
             </table>
         </div>
         """, unsafe_allow_html=True)
@@ -1058,14 +1101,14 @@ elif page == "🤖 Machine Learning":
         st.markdown(f"""
         <div class="model-card">
             <h4 style="margin:0 0 8px 0;">Random Forest {best_badge}</h4>
-            <p class="subtext" style="font-size:0.9rem;">A nonlinear ensemble of decision trees that can capture interactions between features that a linear model would miss.</p>
-            <p class="subtext" style="font-size:0.85rem;"><b>Why selected:</b> used as a comparison point for Logistic Regression, to test whether nonlinear feature interactions add real predictive value.</p>
+            <p style="color:{T['subtext']};font-size:0.9rem;">A nonlinear ensemble of decision trees that can capture interactions between features that a linear model would miss.</p>
+            <p style="color:{T['subtext']};font-size:0.85rem;"><b>Why selected:</b> used as a comparison point for Logistic Regression, to test whether nonlinear feature interactions add real predictive value.</p>
             <table style="width:100%;margin-top:12px;border-collapse:collapse;">
-                <tr><td style="padding:4px 0;"><b>Accuracy</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Accuracy']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>Precision</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Precision']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>Recall</b></td><td style="text-align:right;padding:4px 0;"><b>{m['Recall']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>F1-Score</b></td><td style="text-align:right;padding:4px 0;"><b>{m['F1-Score']:.3f}</b></td></tr>
-                <tr><td style="padding:4px 0;"><b>ROC-AUC</b></td><td style="text-align:right;padding:4px 0;"><b>{m['ROC-AUC']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Accuracy</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Accuracy']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Precision</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Precision']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>Recall</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['Recall']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>F1-Score</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['F1-Score']:.3f}</b></td></tr>
+                <tr><td style="padding:4px 0;color:{T['text']};"><b>ROC-AUC</b></td><td style="text-align:right;padding:4px 0;color:{T['text']};"><b>{m['ROC-AUC']:.3f}</b></td></tr>
             </table>
         </div>
         """, unsafe_allow_html=True)
@@ -1076,37 +1119,34 @@ elif page == "🤖 Machine Learning":
         st.markdown(f"""
         <div class="insight-card">
             <b>📈 Logistic Regression - Practical Benefit</b>
-            <p class="subtext">Coefficients are directly interpretable: a clinician or analyst can see exactly which factors push risk up or down and by how much.</p>
+            <p style="color:{T['subtext']};">Coefficients are directly interpretable: a clinician or analyst can see exactly which factors push risk up or down and by how much.</p>
         </div>
         """, unsafe_allow_html=True)
     with c2:
         st.markdown(f"""
         <div class="insight-card">
             <b>🌲 Random Forest - Practical Benefit</b>
-            <p class="subtext">Captures nonlinear patterns and feature interactions automatically, and provides a native feature-importance ranking without standardized coefficients.</p>
+            <p style="color:{T['subtext']};">Captures nonlinear patterns and feature interactions automatically, and provides a native feature-importance ranking without standardized coefficients.</p>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="insight-card">
         <b>🔄 Why They Are Different</b>
-        <p class="subtext">Logistic Regression assumes a straight-line relationship between each feature and risk; Random Forest can bend that relationship and combine features in more complex ways. Comparing both tells us whether the extra flexibility of Random Forest actually pays off on this dataset - here, it barely does, since the two models land within about a point of each other on every metric.</p>
+        <p style="color:{T['subtext']};">Logistic Regression assumes a straight-line relationship between each feature and risk; Random Forest can bend that relationship and combine features in more complex ways. Comparing both tells us whether the extra flexibility of Random Forest actually pays off on this dataset - here, it barely does, since the two models land within about a point of each other on every metric.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ========== FIXED SECTION: Model Comparison with graceful fallback ==========
+    # Model Comparison
     section_header("Model Comparison", "📊")
     metrics_df = pd.DataFrame(nr.MODEL_METRICS).T
     
-    # Try to apply gradient styling, fall back to plain formatting if matplotlib is unavailable
     try:
         styled_df = metrics_df.style.format("{:.3f}").background_gradient(cmap="Blues", axis=0)
         st.dataframe(styled_df, use_container_width=True)
     except (ImportError, AttributeError):
-        # Fallback: display without gradient styling
         st.dataframe(metrics_df.style.format("{:.3f}"), use_container_width=True)
         st.info("💡 Gradient styling is unavailable (matplotlib not installed). Displaying plain formatted metrics.")
-    # ========== END OF FIX ==========
 
     fig = go.Figure()
     for model, color in [("Logistic Regression", PALETTE["medium_blue"]), ("Random Forest", PALETTE["dark_blue"])]:
@@ -1120,7 +1160,7 @@ elif page == "🤖 Machine Learning":
     <div class="insight-card" style="border-left:4px solid {T['accent']};">
         <span class="badge-best">🏆 Best Performing Model: {nr.BEST_MODEL}</span>
         <p style="margin-top:10px;">{nr.BEST_MODEL_NOTE}</p>
-        <p class="subtext">Naive majority-class baseline accuracy: <b>{nr.BASELINE_ACCURACY:.3f}</b> - both models beat this baseline, confirming real (if modest) learned signal.</p>
+        <p style="color:{T['subtext']};">Naive majority-class baseline accuracy: <b>{nr.BASELINE_ACCURACY:.3f}</b> - both models beat this baseline, confirming real (if modest) learned signal.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1144,7 +1184,7 @@ elif page == "🤖 Machine Learning":
     st.markdown(f"""
     <div class="insight-card">
         <p>{nr.FEATURE_IMPORTANCE_NOTE}</p>
-        <p class="subtext"><b>⚠️ Note:</b> feature importance indicates predictive contribution within these models, not proof of causal influence.</p>
+        <p style="color:{T['subtext']};"><b>⚠️ Note:</b> feature importance indicates predictive contribution within these models, not proof of causal influence.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1165,7 +1205,7 @@ elif page == "ℹ️ About":
     <div class="insight-card">
         <h4 style="margin:0 0 8px 0;">📊 Dataset</h4>
         <p>{nr.DATASET_DESCRIPTION}</p>
-        <p class="subtext">Raw shape: {nr.RAW_SHAPE[0]:,} rows x {nr.RAW_SHAPE[1]} columns. After cleaning (removing {nr.DUPLICATES_REMOVED} duplicate rows, fixing {nr.INVALID_BP_ROWS_FIXED} physiologically invalid blood-pressure readings, and handling {nr.MISSING_VALUES_BEFORE} missing values): {nr.CLEANED_SHAPE[0]:,} rows x {nr.FINAL_COLUMN_COUNT} columns (10 cleaned + 5 engineered).</p>
+        <p style="color:{T['subtext']};">Raw shape: {nr.RAW_SHAPE[0]:,} rows x {nr.RAW_SHAPE[1]} columns. After cleaning (removing {nr.DUPLICATES_REMOVED} duplicate rows, fixing {nr.INVALID_BP_ROWS_FIXED} physiologically invalid blood-pressure readings, and handling {nr.MISSING_VALUES_BEFORE} missing values): {nr.CLEANED_SHAPE[0]:,} rows x {nr.FINAL_COLUMN_COUNT} columns (10 cleaned + 5 engineered).</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1179,7 +1219,7 @@ elif page == "ℹ️ About":
         <div class="insight-card">
             <h4 style="margin:0 0 12px 0;">⚡ Technologies</h4>
             <ul style="list-style:none;padding:0;">
-                {''.join(f'<li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">✅ {t}</li>' for t in nr.TECHNOLOGIES)}
+                {''.join(f'<li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">✅ {t}</li>' for t in nr.TECHNOLOGIES)}
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -1188,29 +1228,43 @@ elif page == "ℹ️ About":
         <div class="insight-card">
             <h4 style="margin:0 0 12px 0;">🏆 Project Highlights</h4>
             <ul style="list-style:none;padding:0;">
-                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">📊 {nr.CLEANED_SHAPE[0]:,} records analyzed</li>
-                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">🔢 {nr.FINAL_COLUMN_COUNT} total features</li>
-                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">🎯 {nr.N_KPIS} KPIs tracked</li>
-                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">💡 {nr.N_BUSINESS_QUESTIONS} business questions</li>
-                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};">🧠 {nr.N_ML_MODELS} ML models compared</li>
-                <li style="padding:6px 0;">🏅 Best model: {nr.BEST_MODEL} (ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f})</li>
+                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">📊 {nr.CLEANED_SHAPE[0]:,} records analyzed</li>
+                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">🔢 {nr.FINAL_COLUMN_COUNT} total features</li>
+                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">🎯 {nr.N_KPIS} KPIs tracked</li>
+                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">💡 {nr.N_BUSINESS_QUESTIONS} business questions</li>
+                <li style="padding:6px 0;border-bottom:1px solid {T['glass_border']};color:{T['text']};">🧠 {nr.N_ML_MODELS} ML models compared</li>
+                <li style="padding:6px 0;color:{T['text']};">🏅 Best model: {nr.BEST_MODEL} (ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f})</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown(f"""
-    <div class="banner" style="background:linear-gradient(135deg, {PALETTE['glass_bg']}, {T['panel']});border-radius:12px;padding:20px;border:1px solid {T['glass_border']};text-align:center;">
+    <div style="background:linear-gradient(135deg, {PALETTE['glass_bg']}, {T['panel']});border-radius:12px;padding:20px;border:1px solid {T['glass_border']};text-align:center;">
         🚀 Built from <code>python_project_NTI.ipynb</code>. All KPIs, business answers, and ML metrics on this site are the real values produced by that notebook - none are estimated or invented for the deployment.
     </div>
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# FOOTER
+# FOOTER WITH BRANDING
 # =============================================================================
-st.markdown(f"""
-<div style="text-align:center;padding:20px 0;margin-top:40px;border-top:1px solid {T['glass_border']};">
-    <p style="color:{T['subtext']};font-size:0.85rem;">
-        🩺 Health Data Analytics & Risk Prediction • Built with Streamlit • Data-driven Healthcare Intelligence
-    </p>
-</div>
-""", unsafe_allow_html=True)
+def render_footer():
+    st.markdown(f"""
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                {T['logo']}
+            </div>
+            <div class="footer-text">
+                © 2026 MEDISIGHTS • Data-Driven Clinical Insights
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+render_footer()
