@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - SINGLE DEFINITION (NO DUPLICATION)
+# BRANDING & LOGO - SINGLE CLEAN DEFINITION
 # =============================================================================
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +151,7 @@ DATA_MODE = "live" if st.session_state.df is not None else "reference"
 df = st.session_state.df
 
 # =============================================================================
-# CSS
+# CSS - CLEAN WITH NO DUPLICATION
 # =============================================================================
 def inject_css():
     st.markdown(f"""
@@ -190,7 +190,6 @@ def inject_css():
                 radial-gradient(circle at 50% 80%, {T['glass_bg']} 0%, transparent 50%);
         }}
         
-        /* HEADER */
         .header-container {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -275,7 +274,6 @@ def inject_css():
             50% {{ opacity: 0.6; transform: scale(0.85); }}
         }}
         
-        /* SIDEBAR */
         section[data-testid="stSidebar"] {{
             background: {T['panel']} !important;
             backdrop-filter: blur(20px) saturate(180%);
@@ -315,7 +313,6 @@ def inject_css():
             text-transform: uppercase;
         }}
         
-        /* FOOTER */
         .footer {{
             background: {T['panel']};
             backdrop-filter: blur(20px) saturate(180%);
@@ -375,7 +372,6 @@ def inject_css():
             transform: translateY(-2px);
         }}
         
-        /* CARDS */
         .kpi-card, .insight-card, .model-card {{
             background: {T['panel']} !important;
             backdrop-filter: blur(10px) saturate(180%);
@@ -483,7 +479,6 @@ def inject_css():
             box-shadow: 0 12px 48px {PALETTE['glow']};
         }}
         
-        /* RESPONSIVE */
         @media (max-width: 768px) {{
             .header-container {{
                 flex-direction: column;
@@ -603,7 +598,7 @@ def inject_css():
 inject_css()
 
 # =============================================================================
-# HEADER
+# HEADER - SINGLE DEFINITION
 # =============================================================================
 def render_header():
     status_class = "green" if DATA_MODE == "live" else "yellow"
@@ -626,8 +621,6 @@ def render_header():
     </div>
     """, unsafe_allow_html=True)
 
-render_header()
-
 # =============================================================================
 # FLOATING ACTION BUTTON
 # =============================================================================
@@ -638,7 +631,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# SIDEBAR
+# SIDEBAR - SINGLE DEFINITION
 # =============================================================================
 with st.sidebar:
     st.markdown(f"""
@@ -753,6 +746,11 @@ def style_fig(fig, title=None, height=420):
         hoverlabel=dict(bgcolor=T['panel'], font=dict(color=T['text']))
     )
     return fig
+
+# =============================================================================
+# RENDER HEADER
+# =============================================================================
+render_header()
 
 # =============================================================================
 # PAGE: OVERVIEW
@@ -1271,7 +1269,7 @@ elif page == "ℹ️ About":
     """, unsafe_allow_html=True)
 
 # =============================================================================
-# FOOTER
+# FOOTER - SINGLE DEFINITION
 # =============================================================================
 def render_footer():
     st.markdown(f"""
@@ -1293,4 +1291,7 @@ def render_footer():
     </div>
     """, unsafe_allow_html=True)
 
+# =============================================================================
+# RENDER FOOTER
+# =============================================================================
 render_footer()
