@@ -839,10 +839,18 @@ if page == "🏠 Overview":
             </div>
             """, unsafe_allow_html=True)
         with col3:
+            # Best ML Model - Fixed with full name
+            model_name = nr.BEST_MODEL
+            # إذا كان الاسم طويل، نضبط حجم الخط
+            if len(model_name) > 15:
+                font_size = "1.4rem"
+            else:
+                font_size = "1.8rem"
+            
             st.markdown(f"""
             <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
                 <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Best ML Model</div>
-                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.BEST_MODEL}</div>
+                <div style="font-size:{font_size};font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;line-height:1.2;">{model_name}</div>
                 <div style="font-size:0.8rem;color:{T['subtext']};">ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}</div>
             </div>
             """, unsafe_allow_html=True)
@@ -874,10 +882,17 @@ if page == "🏠 Overview":
             </div>
             """, unsafe_allow_html=True)
         with col3:
+            # Best ML Model - Fixed with full name
+            model_name = nr.BEST_MODEL
+            if len(model_name) > 15:
+                font_size = "1.4rem"
+            else:
+                font_size = "1.8rem"
+            
             st.markdown(f"""
             <div style="background:{T['panel']};border:1px solid {T['glass_border']};border-radius:16px;padding:20px 24px;text-align:center;height:100%;">
                 <div style="font-size:0.75rem;color:{T['subtext']};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Best ML Model</div>
-                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;">{nr.BEST_MODEL}</div>
+                <div style="font-size:{font_size};font-weight:900;background:linear-gradient(135deg,#1B4F72,#2E86C1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px 0;line-height:1.2;">{model_name}</div>
                 <div style="font-size:0.8rem;color:{T['subtext']};">ROC-AUC {nr.MODEL_METRICS[nr.BEST_MODEL]['ROC-AUC']:.3f}</div>
             </div>
             """, unsafe_allow_html=True)
