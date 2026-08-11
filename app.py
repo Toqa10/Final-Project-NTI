@@ -25,7 +25,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# BRANDING & LOGO - ENHANCED VERSION
+# BRANDING & LOGO - CLEAN VERSION (NO DUPLICATION)
 # =============================================================================
 LOGO_SVG = """
 <svg width="240" height="95" viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg">
